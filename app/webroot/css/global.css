@@ -1,0 +1,69 @@
+@CHARSET "UTF-8";
+div#container {
+	background-color: red;
+}
+
+/*** general ***/
+* {
+	margin: 0;
+	padding: 0;	
+}
+
+body{
+	margin: 10px;	
+}
+
+h1 {
+	font-size: 24px;
+}
+
+h2 {
+	font-size: 18px;
+}
+
+/***** upcomign milestone ***/
+#upcoming_milestone {
+	width: 500px;
+	border: 1px solid #ccc;
+	border-radius: 10px;	
+		background: #ddd;
+}
+
+#upcoming_milestone .milestone {
+	padding: 5px;
+	color: #000;
+	font-size: 0.7em;
+}
+
+#upcoming_milestone .milestone .description {}
+
+#upcoming_milestone .tasks {	
+}
+
+#upcoming_milestone .tasks p{	
+	height: 30px;
+	line-height: 30px;
+	padding-left: 20px;
+	border-bottom: 1px solid black;	
+}
+
+#upcoming_milestone .tasks p.taskDone{
+	background-color: green;	
+	color: #fff;
+}
+
+#upcoming_milestone .tasks p.taskPending{
+	background-color: red;	
+}
+
+#upcoming_milestone .tasks p.bottom_menu{
+	border-bottom: none;
+}	
+
+#commentsContainer {
+}
+
+/*** wiki **/
+.tinymce{
+	height:600px;
+}

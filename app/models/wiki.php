@@ -6,7 +6,7 @@ class Wiki extends AppModel {
     var $belongsTo = array(
     	'User' =>array(
     		'className' => 'User',
-    		'foreignKey' => 'user_id'    	
+    		'foreignKey' => 'created_by'    	
     	),
     	'Parent' =>array(
     		'className' => 'Wiki',

@@ -42,8 +42,7 @@ class ProjectsController extends AppController {
 		if($project["Project"]["id"]!=$id){
 			$this->Session->setFlash('The requested project does not exist!');
 	        $this->redirect(array('controller' => 'projects', 'action' => 'index'));
-		}else{
-		
+		}else{		
 			$this->Session->write('Project.id', $id);		
 					
 			// save to view variable: paginate associated project items - with condition!

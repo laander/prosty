@@ -5,16 +5,6 @@ class WikisController extends AppController {
 	var $name = 'Wikis';
 	var $uses = array('Wiki','Milestone');
 	
-	
-	function beforeRender() {
-	  $this->dostuff();
-	}
-	
-	function doStuff() {
-	  // do what you need to do here - eg: load some data.
-	  $milestones = $this->Milestone->find('all');
-	}
-	
 
 	function index() {
 		$this->set('wikis', $this->paginate("Wiki", array('Wiki.parent_id' => 0)));		
@@ -35,7 +25,7 @@ class WikisController extends AppController {
         $this->set(compact('navItems','wiki', 'milestones'));
 	}
 
-	function add() {
+	function add($parent_id = null) {
 		
 		if (!empty($this->data)) {
 			$this->Wiki->create();
@@ -46,9 +36,14 @@ class WikisController extends AppController {
 				$this->Session->setFlash(__('The wiki could not be saved. Please, try again.', true));
 			}
 		}
-		$users = $this->Wiki->User->find('list');
-		$parents = $this->Wiki->Parent->find('list');
-		$this->set(compact('users', 'parents'));
+		
+		//pass parameter parent_id to hidden input in view
+		if(!$parent_id){
+			$parents = $this->Wiki->Parent->find('list');
+			$this->set(compact('parents'));			
+		}else{
+			$this->data["Wiki"]["parent_id"] = $parent_id;
+		}					
 	}
 
 	function edit($id = null) {

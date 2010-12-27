@@ -91,7 +91,7 @@
 		<tr<?php echo $class;?>>
 			<td><?php echo $task['id'];?></td>
 			<td><?php echo $task['milestone_id'];?></td>
-			<td><?php echo $task['user_id'];?></td>
+			<td><?php echo $task['created_by'];?></td>
 			<td><?php echo $task['title'];?></td>
 			<td><?php echo $task['description'];?></td>
 			<td><?php echo $task['status'];?></td>

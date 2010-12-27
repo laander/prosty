@@ -3,6 +3,18 @@ class WikisController extends AppController {
 	var $helpers = array ('Html','Form', 'Javascript');
 	var $components = array('Session');
 	var $name = 'Wikis';
+	var $uses = array('Wiki','Milestone');
+	
+	
+	function beforeRender() {
+	  $this->dostuff();
+	}
+	
+	function doStuff() {
+	  // do what you need to do here - eg: load some data.
+	  $milestones = $this->Milestone->find('all');
+	}
+	
 
 	function index() {
 		$this->set('wikis', $this->paginate("Wiki", array('Wiki.parent_id' => 0)));		
@@ -20,7 +32,7 @@ class WikisController extends AppController {
 		));		
 		
 		$wiki = $this->Wiki->read(null, $id);		
-        $this->set(compact('navItems','wiki'));
+        $this->set(compact('navItems','wiki', 'milestones'));
 	}
 
 	function add() {

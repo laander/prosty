@@ -9,61 +9,83 @@ div#container {
 	padding: 0;	
 }
 
-body{
-	margin: 10px;	
-}
-
 h1 {
 	font-size: 24px;
 }
 
 h2 {
 	font-size: 18px;
+	background: none;
 }
 
-/***** upcomign milestone ***/
-#upcoming_milestone {
+#header{
+	background-color: #fff;
+	color: #000;
+	height: 20px;
+	margin-bottom: 10px; 
+}
+
+/**** Top navigation ****/
+#topNav{
+		list-style-type:none;
+		float:left;
+}
+
+ul#topNav li{
+	display:inline;
+}
+
+#userInfo{
+	float:right;	
+}
+
+/** general dashboard container **/
+.dashboard {
 	width: 500px;
 	border: 1px solid #ccc;
 	border-radius: 10px;	
-		background: #ddd;
-}
-
-#upcoming_milestone .milestone {
-	padding: 5px;
+	background: #ddd;
 	color: #000;
-	font-size: 0.7em;
+	margin:10px 5px;
+	float:left;
 }
 
-#upcoming_milestone .milestone .description {}
+.dashboard .header{border-radius:10px 10px 0 0; border-bottom:1px solid #bbb;}
+.dashboard .footer{border-radius: 0 0 10px 10px; border-top:1px solid #bbb;}
+.dashboard .header,
+.dashboard .footer{	
+	background-color: #fff;
+	padding: 10px;
+}
+.dashboard .footer .left{	float:left;}
+.dashboard .footer .right{	float:right;}
 
-#upcoming_milestone .tasks {	
+
+/***** upcoming milestone description ***/
+.milestone .milestoneDescription {
+	font-size: 0.7em;	
 }
 
-#upcoming_milestone .tasks p{	
+/** tasks **/
+.milestone .tasks{
+	margin: 0 30px 10px 30px;
+}
+
+.milestone .tasks p{	
 	height: 30px;
-	line-height: 30px;
-	padding-left: 20px;
-	border-bottom: 1px solid black;	
+	line-height: 30px;	
+	padding: 5px;	
+	border-bottom: 1px solid #aaa;	
 }
-
-#upcoming_milestone .tasks p.taskDone{
+.milestone .tasks p.taskPending{background-color: red;}
+.milestone .tasks p.taskDone{
 	background-color: green;	
 	color: #fff;
 }
 
-#upcoming_milestone .tasks p.taskPending{
-	background-color: red;	
-}
-
-#upcoming_milestone .tasks p.bottom_menu{
-	border-bottom: none;
-}	
-
-#commentsContainer {
+div.clear{
+	clear:both;
 }
 
 /*** wiki **/
-.tinymce{
-	height:600px;
-}
+.tinymce{	height:600px; }

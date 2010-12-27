@@ -14,9 +14,19 @@
         ?>
 </head>
 <body>
-				<?php echo $this->Session->flash(); ?>
+				<?php echo $this->Session->flash(); ?>				
+				<div id="header">
+					<div id="topNav">
+						<?php echo $this->Html->link('Dashboard', array('controller' => 'projects', 'action' => 'dashboard')); ?>
+						<?php echo $this->Html->link('All Projects', array('controller' => 'projects', 'action' => 'index')); ?>
+						<?php echo $this->Html->link('New Project', array('controller' => 'projects', 'action' => 'add')); ?>
+					</div>
+					<?php if(isset($_SESSION["Project"]["id"])){echo "Dette projekt: ". $_SESSION["Project"]["id"];} ?>
+					<div id="userInfo">Hi <?php echo $currentUser["User"]["username"]; ?> <?php echo $this->Html->link('Logout', array('controller'=>'users','action' => 'logout')); ?></div>
+				</div>
+				<div class="clear"></div>			
 				<h1><?php echo $title_for_layout; ?></h1>
 				<?php echo $content_for_layout; ?>
-
+<?php echo $this->element('sql_dump'); ?>
 </body>
 </html>

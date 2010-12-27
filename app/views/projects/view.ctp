@@ -68,7 +68,8 @@
 		if ($i++ % 2 == 0) {
 			$class = ' class="altrow"';
 		}
-	?>
+	?>	
+	
 	<tr<?php echo $class;?>>
 		<td><?php echo $milestone['Milestone']['id']; ?>&nbsp;</td>
 		<td>

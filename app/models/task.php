@@ -17,7 +17,7 @@ class Task extends AppModel {
     function afterFind($results){
     	  foreach ($results as $id => $val) {
     	  	
-    	  	if(isset($val["Task"])){    	  		
+    	  	if(isset($val["Task"]) && isset($results[$id]["Task"]["status"]) && isset($val["Task"]["estimate"]) && isset($val["Task"]["priority"])){    	  		
 		        //human readable status    	  		
     	  		$results[$id]["Task"]["status_text"] = $val["Task"]["status"]==0 ? "Pending" : "Done";    	  		    	  	
     	  		

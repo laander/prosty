@@ -1,8 +1,7 @@
 <h2><?php __('Milestones');?></h2>
 <?php
-foreach ($milestones as $milestone):
-		$footer = $this->Html->link('Add Task', array('controller' => 'tasks', 'action' => 'add', $milestone['Milestone']['id']), array('class'=> 'left')); 
-		echo $this->element('milestoneWithTasks', array("milestone" => $milestone, "header"=>"", "footer"=>$footer));	
+foreach ($milestones as $milestone): 
+		echo $this->element('milestoneWithTasks', array("milestone" => $milestone, "header"=>"", "left"=>1, "right"=>0));	
 	endforeach; ?>
 </table>
 <?php echo $this->Html->link(__('New Milestone', true), array('action' => 'add')); ?>

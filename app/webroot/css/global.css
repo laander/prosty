@@ -77,10 +77,19 @@ ul#topNav li{
 	padding: 5px;	
 	border-bottom: 1px solid #aaa;	
 }
-.milestone .tasks p.taskPending{background-color: red;}
+.milestone .tasks p.taskPending{background-color: #eee;}
 .milestone .tasks p.taskDone{
 	background-color: green;	
 	color: #fff;
+}
+
+.milestone .tasks p .toggleStatus{
+	float:right;
+	height: 30px;	
+}
+
+.milestone .tasks p.taskPending .toggleStatus{
+	opacity:0.4;
 }
 
 div.clear{

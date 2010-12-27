@@ -1,7 +1,7 @@
 <?php
 class MilestonesController extends AppController {
 	var $components = array('Session');
-	var $helpers = array ('Html','Form');
+	var $helpers = array ('Html','Form','Javascript');
 	var $name = 'Milestones';
 
 	var $scaffold;

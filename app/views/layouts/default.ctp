@@ -28,6 +28,6 @@
 				<div class="clear"></div>			
 				<h1><?php echo $title_for_layout; ?></h1>
 				<?php echo $content_for_layout; ?>
-<?php echo $this->element('sql_dump'); ?>
+<?php //echo $this->element('sql_dump'); ?>
 </body>
 </html>

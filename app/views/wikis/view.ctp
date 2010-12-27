@@ -24,3 +24,6 @@
 	<?php endforeach; ?>
 	</ul>
 </div>
+<?php
+	echo $this->requestAction("/comments/comments/index/Wiki/".$wiki['Wiki']['id'], array('return')); 
+?>

@@ -1,7 +1,7 @@
 <?php
 class ProjectsController extends AppController {
 	var $components = array('Session');
-	var $helpers = array ('Html','Form'); 
+	var $helpers = array ('Html','Form','Javascript'); 
 	
 	var $name = 'Projects';
     var $paginate = array(

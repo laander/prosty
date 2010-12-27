@@ -26,12 +26,8 @@
 
 <?php
 if(is_array($milestone)){
-	$footer = 
-	$this->Html->link('Add Task', array('controller' => 'tasks', 'action' => 'add',  $milestone['Milestone']['id']), array('class'=> 'left')) . 
-	$this->Html->link('All Milestones', array('controller' => 'milestones', 'action' => 'index'), array('class'=> 'right')); 
-	echo $this->element('milestoneWithTasks', array("milestone" => $milestone, "header"=>"Upcoming: ", "footer"=>$footer));
+	echo $this->element('milestoneWithTasks', array("milestone" => $milestone, "header"=>"Upcoming: ", "left"=>1, "right"=>1));
 }else{
-	$footer = $this->Html->link('All Milestones', array('controller' => 'milestones', 'action' => 'index'), array('class'=> 'right'));
-	echo $this->element('milestoneWithTasks', array("milestone" => false, "header"=>"Upcoming milestone", "footer"=>$footer));
+	echo $this->element('milestoneWithTasks', array("milestone" => false, "header"=>"Upcoming milestone", "left"=>0, "right"=>1));
 }
 ?>

@@ -19,6 +19,7 @@
 					<div id="topNav">
 						<?php echo $this->Html->link('Dashboard', array('controller' => 'projects', 'action' => 'dashboard')); ?>
 						<?php echo $this->Html->link('New Milestone', array('controller' => 'milestones', 'action' => 'add')); ?>
+						<?php echo $this->Html->link('Wiki', array('controller' => 'wikis', 'action' => 'index')); ?>
 						<?php echo $this->Html->link('All Projects', array('controller' => 'projects', 'action' => 'index')); ?>						
 					</div>
 					<?php if(isset($_SESSION["Project"]["id"])){echo "Dette projekt: ". $_SESSION["Project"]["id"];} ?>

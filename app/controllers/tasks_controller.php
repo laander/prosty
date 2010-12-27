@@ -37,14 +37,13 @@ class TasksController extends AppController {
 		if (!empty($this->data)) {														
 			if ($this->Task->save($this->data)) {
 				$this->Session->setFlash(__('The task has been saved', true));
-				$this->redirect(array('controller'=>'milestones','action' => 'index'));
+				$this->redirect(array('controller'=>'projects','action' => 'dashboard'));
 			} else {
 				$this->Session->setFlash(__('The task could not be saved. Please, try again.', true));
-			}
-			
+			}			
 		//no data has been posted yet	
 		}else{
-			$this->data["Task"]["milestone_id"] = $milestone_id;
+			$this->set("milestone_id", $milestone_id);
 		}
 	}	
 		

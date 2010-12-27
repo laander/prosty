@@ -1,7 +1,37 @@
 $(document).ready(function() {
 	
-	//add task popup window (colorbox)
-	$(".addTaskLink").colorbox({width:"50%", inline:true, href:"#addTask"});		
+	$('textarea').each(function() {
+		$(this).autoResize();
+		$(this).keydown();
+	});				
+	
+	$("a.showMore").click(function(){		
+		var divClass = $(this).attr('rel');		
+		$("."+divClass).fadeIn();		
+		$.colorbox.resize();
+		$(this).hide();
+		return false;
+	});
+	
+	$("a.showLess").click(function(){
+		var divClass = $(this).attr('rel');		
+		$("."+divClass).hide();				
+		$("a.showMore").show();
+		$.colorbox.resize();
+		return false;
+	});	
+	
+	//open 'add task'-popup window (colorbox)	
+	$(".addTaskLink").click(function(event){		 
+		event.preventDefault();		
+		var milestone_id = $(this).attr('rel');
+		$('#TaskMilestoneId').val(milestone_id);
+		$.colorbox({width:"50%", inline:true, href:"#addTask"}, function(){
+				$('#TaskTitle').focus();
+		});
+	});	
+	
+	//$.colorbox({width:"50%", inline:true, href:"#addTask"});
 	
 	/** post comment **/
 	$('form.js-ajax').live('submit', function() {
@@ -34,9 +64,8 @@ $(document).ready(function() {
 				}else{
 					$(container).addClass("taskDone");
 					$(container).removeClass("taskPending");
-				}
-				
-			  }
+				}				
+			 }
 		});
 	});
 	
@@ -46,4 +75,3 @@ function afterSubmit(page){
 	$("#CommentComment").val(''); //reset textarea
 	$('#commentsContainer').load(page); //load new comments
 }
-

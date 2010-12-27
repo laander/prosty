@@ -1,0 +1,46 @@
+#costBenefit{
+	width:350px;
+}
+
+/*two main containers for each of the sliders and their text labels*/
+.slideContainer{	
+	height: 40px;
+	position:relative;
+}
+
+p.header{
+	font-weight:bold;
+	font-size: 0.8em;
+	text-align:center;
+	position:relative;	
+	top:-3px;
+}
+
+/* the slider */
+#importance,#difficulty {
+	width: 100px;
+	margin:0 15px;
+	position:absolute;
+	top:15px;
+	left: 50%;
+	margin-left:-50px;
+}
+
+/*Text labels next to sliders*/
+.slideTags{
+	position: absolute;
+	top:-2;
+}
+.slideTags.left{
+	width: 110px;
+	text-align:right;
+}
+.slideTags.right{
+	left: 240px;
+	text-align:right;
+}
+
+
+#humanScore {
+	text-align:center;
+}

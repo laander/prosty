@@ -23,10 +23,10 @@
 </div>
 
 <?php /***************** UPCOMING MILESTONE **************************/ ?>
-
 <?php
 if(is_array($milestone)){
 	echo $this->element('milestoneWithTasks', array("milestone" => $milestone, "header"=>"Upcoming: ", "left"=>1, "right"=>1));
+	echo $this->element('addTaskWindow');
 }else{
 	echo $this->element('milestoneWithTasks', array("milestone" => false, "header"=>"Upcoming milestone", "left"=>0, "right"=>1));
 }

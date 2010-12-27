@@ -60,6 +60,9 @@ ul#topNav li{
 .dashboard .footer .left{	float:left;}
 .dashboard .footer .right{	float:right;}
 
+/** dashboard - popup - add task #addTask **/
+.advancedOptions{display:none;}
+
 
 /***** upcoming milestone description ***/
 .milestone .milestoneDescription {
@@ -87,10 +90,8 @@ ul#topNav li{
 	float:right;
 	height: 30px;	
 }
-
-.milestone .tasks p.taskPending .toggleStatus{
-	opacity:0.4;
-}
+.milestone .tasks p.taskPending .toggleStatus{opacity:0.4;}
+.milestone .tasks p .toggleStatus:hover{opacity:0.8;}
 
 div.clear{
 	clear:both;
@@ -98,3 +99,4 @@ div.clear{
 
 /*** wiki **/
 .tinymce{	height:600px; }
+

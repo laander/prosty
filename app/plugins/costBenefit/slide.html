@@ -2,115 +2,10 @@
 <head>
 <title>Simple Cost Estimator</title>
 <link type="text/css" href="css/jqueryui.css" rel="stylesheet" />
+<link type="text/css" href="css/costBenefit.css" rel="stylesheet" />
 <script type="text/javascript" src="js/jquery.js"></script>
 <script type="text/javascript" src="js/jqueryui-1.8.7.js"></script>
-
-<style>
-
-#costBenefit{
-	width:350px;
-}
-
-/*two main containers for each of the sliders and their text labels*/
-.slideContainer{	
-	height: 40px;
-	position:relative;
-}
-
-p.header{
-	font-weight:bold;
-	font-size: 0.8em;
-	text-align:center;
-	position:relative;	
-	top:-3px;
-}
-
-/* the slider */
-#importance,#difficulty {
-	width: 100px;
-	margin:0 15px;
-	position:absolute;
-	top:15px;
-	left: 50%;
-	margin-left:-50px;
-}
-
-/*Text labels next to sliders*/
-.slideTags{
-	position: absolute;
-	top:-2;
-}
-.slideTags.left{
-	width: 110px;
-	text-align:right;
-}
-.slideTags.right{
-	left: 240px;
-	text-align:right;
-}
-
-
-#humanScore {
-	text-align:center;
-}
-</style>
-<script type="text/javascript">
-$(function() {
-	$("#importance").slider({
-		value:3,
-		min: 1,
-		max: 5,
-		step: 1,
-		slide: function(event, ui) {
-			$("#importanceScore").val(ui.value);
-			$("#conclusion").val(ui.value*$("#difficultyScore").attr("value"));
-		},
-		stop: function(){writeHumanScore();}
-	});
-
-	$("#importanceScore").val($("#importance").slider("value"));
-	$("#conclusion").val($("#importance").slider("value"));
-
-
-	$("#difficulty").slider({
-		value:3,
-		min: 1,
-		max: 5,
-		step: 1,				
-		slide: function(event, ui) {
-			$("#difficultyScore").val(ui.value);
-			$("#conclusion").val(ui.value*$("#importanceScore").attr("value"));
-		},
-		stop: function(){writeHumanScore();}
-	});
-
-	$("#difficultyScore").val($("#difficulty").slider("value"));
-	$("#conclusion").val($("#difficulty").slider("value"));
-});
-
-function writeHumanScore(){
-	var score = $("#conclusion").val();
-	var text = "";
-	if(score<=2){
-	  text ="Ignored!";	
-	}else if(score<8){
-	  text ="Low priority";	
-	}else if(score<15){
-	  text ="Average priority";	
-	}else if(score<20){
-	  text ="High priority";	
-	}else if(score<=25){
-	  text ="Highest priority!";	
-	}
-
-	var oldText = $('#humanScore').text();
-
-	if(oldText!=text){
-		$('#humanScore').hide().html(text).fadeIn();
-	}	
-}
-</script>
-
+<script type="text/javascript" src="js/costBenefit.js"></script>
 </head>
 <body>
 
@@ -121,7 +16,7 @@ function writeHumanScore(){
 		<p class="slideTags left">Careless</p>
 		<div id="importance"></div>
 		<p class="slideTags right">Very important</p>
-		<input type="hidden" id="importanceScore"/>
+		<input type="hidden" id="importanceScore" value="5"/>
 	</div>
 
 	<div class="slideContainer">
@@ -129,10 +24,10 @@ function writeHumanScore(){
 		<p class="slideTags left">Very difficult</p>
 		<div id="difficulty"></div>
 		<p class="slideTags right">Piece of cake</a>
-		<input type="hidden" id="difficultyScore"/>
-		<input type="hidden" id="conclusion"/>
+		<input type="hidden" id="difficultyScore" value="3"/>
 	</div>
 
+	<input type="hidden" id="conclusion"/>
 	<p id="humanScore"></p>
 </div>
 </body>

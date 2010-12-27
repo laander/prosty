@@ -5,12 +5,14 @@
         <title><?php echo $title_for_layout; ?> | Prosty</title>
 
         <?php
+            echo $this->Html->css('colorbox');
 	        echo $this->Html->css('cake.generic');
 	        echo $this->Html->css('global.css');
 			
 	        echo $this->Html->script('jquery-1.4.4.min.js');
-			echo $this->Html->script('global.js');
+			echo $this->Html->script('autoresize.jquery.min.js');			
 	        echo $scripts_for_layout;
+			echo $this->Html->script('global.js');
         ?>
 </head>
 <body>

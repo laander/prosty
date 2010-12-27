@@ -93,8 +93,7 @@ class ProjectsController extends AppController {
 		if($project["Project"]["id"]!=$id || !$id){
 			$this->Session->setFlash('The requested project does not exist!');
 	        $this->redirect(array('controller' => 'projects', 'action' => 'index'));
-		}else{
-						
+		}else{						
 			$this->Session->write('Project.id', $id);   		  
 			
 			/*** get upcoming milestone **************************************/
@@ -103,8 +102,8 @@ class ProjectsController extends AppController {
 			
 			//only milestone with deadline in the future
 			$conditions = array("Milestone.deadline >=" => ".NOW()." );
-			$milestone = $this->Milestone->find('first', array('conditions'=>$conditions));						
-			$this->set(compact('project','milestone','clients','consultants'));		
+			$milestone = $this->Milestone->find('first', array('conditions'=>$conditions));								
+			$this->set(compact('project','milestone','clients','consultants'));
 		}			
 	}
 }

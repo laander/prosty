@@ -7,23 +7,17 @@ class Comment extends CommentsAppModel {
 		'comment' => array('notempty'),
 		'model' => array('notempty'),
 		'foreign_key' => array('numeric'),
-		'creator_id' => array('numeric'),
-		'modifier_id' => array('numeric')
+		'created_by' => array('numeric'),
+		'modified_by' => array('numeric')
 	);			
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 	var $belongsTo = array(
 			'Creator' => array('className' => 'User',
-								'foreignKey' => 'creator_id',
-								'conditions' => '',
-								'fields' => '',
-								'order' => ''
+								'foreignKey' => 'created_by'
 			),
 			'Modifier' => array('className' => 'User',
-								'foreignKey' => 'modifier_id',
-								'conditions' => '',
-								'fields' => '',
-								'order' => ''
+								'foreignKey' => 'modified_by'
 			)
 	);
 }

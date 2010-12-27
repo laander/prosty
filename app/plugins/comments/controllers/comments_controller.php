@@ -5,20 +5,23 @@ class CommentsController extends CommentsAppController {
 	var $helpers = array('Html', 'Form', 'Ajax', 'Time');
 	var $components = array('RequestHandler', 'Session');
 
+	/*
 	function beforeFilter() {
 		parent::beforeFilter();
-		$this->LoadsysAuth->allow('index', 'add');
 	}
-
+	*/
+	
 	function index($model, $id) {				
 		$this->paginate = array(
 			'conditions' => array(
 				'Comment.model' => $model,
 				'Comment.foreign_key' => $id,
 			),
+			/*
 			'contain' => array(
 				'Creator',
 			),
+			*/
 			'limit' => 8,
 			'page' => 'first',
 		);

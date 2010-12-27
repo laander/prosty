@@ -18,8 +18,8 @@
 				<div id="header">
 					<div id="topNav">
 						<?php echo $this->Html->link('Dashboard', array('controller' => 'projects', 'action' => 'dashboard')); ?>
-						<?php echo $this->Html->link('All Projects', array('controller' => 'projects', 'action' => 'index')); ?>
-						<?php echo $this->Html->link('New Project', array('controller' => 'projects', 'action' => 'add')); ?>
+						<?php echo $this->Html->link('New Milestone', array('controller' => 'milestones', 'action' => 'add')); ?>
+						<?php echo $this->Html->link('All Projects', array('controller' => 'projects', 'action' => 'index')); ?>						
 					</div>
 					<?php if(isset($_SESSION["Project"]["id"])){echo "Dette projekt: ". $_SESSION["Project"]["id"];} ?>
 					<div id="userInfo">Hi <?php echo $currentUser["User"]["username"]; ?> <?php echo $this->Html->link('Logout', array('controller'=>'users','action' => 'logout')); ?></div>

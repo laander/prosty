@@ -1,5 +1,4 @@
 $(function() {
-
 	var finalScore = "#conclusion";
 	costBenefit("#importance", "#TaskPriority","#TaskEstimate");
 	costBenefit("#difficulty", "#TaskEstimate", "#TaskPriority");

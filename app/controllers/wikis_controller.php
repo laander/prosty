@@ -5,7 +5,6 @@ class WikisController extends AppController {
 	var $name = 'Wikis';
 	var $uses = array('Wiki','Milestone');
 	
-
 	function index() {
 		$this->set('wikis', $this->paginate("Wiki", array('Wiki.parent_id' => 0)));		
 	}

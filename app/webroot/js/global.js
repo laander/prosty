@@ -1,18 +1,26 @@
 $(document).ready(function() {
+
+	/** change project selctor **/
+	$('select#ProjectProject').change(function() {
+		var project_id = $(this).val();
+        //$(location).attr('href', '/projects/views/'+project_id);
+		 window.location = '/projects/view/'+project_id;
+	}); 
 	
-	$('textarea').each(function() {
+	/* resize textareas automatically */
+	$('textarea').not('.tinymce').each(function() {
 		$(this).autoResize();
 		$(this).keydown();
 	});				
 	
+	/** show/hide div **/
 	$("a.showMore").click(function(){		
 		var divClass = $(this).attr('rel');		
 		$("."+divClass).fadeIn();		
 		$.colorbox.resize();
 		$(this).hide();
 		return false;
-	});
-	
+	});	
 	$("a.showLess").click(function(){
 		var divClass = $(this).attr('rel');		
 		$("."+divClass).hide();				

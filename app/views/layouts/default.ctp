@@ -16,17 +16,21 @@
         ?>
 </head>
 <body>
-				<?php echo $this->Session->flash(); ?>				
-				<div id="header">
-					<div id="topNav">
-						<?php echo $this->Html->link('Dashboard', array('controller' => 'projects', 'action' => 'dashboard')); ?>
-						<?php echo $this->Html->link('New Milestone', array('controller' => 'milestones', 'action' => 'add')); ?>
-						<?php echo $this->Html->link('Wiki', array('controller' => 'wikis', 'action' => 'index')); ?>
-						<?php echo $this->Html->link('All Projects', array('controller' => 'projects', 'action' => 'index')); ?>						
-					</div>
-					<?php if(isset($_SESSION["Project"]["id"])){echo "Dette projekt: ". $_SESSION["Project"]["id"];} ?>
-					<div id="userInfo">Hi <?php echo $currentUser["User"]["username"]; ?> <?php echo $this->Html->link('Logout', array('controller'=>'users','action' => 'logout')); ?></div>
-				</div>
+				<?php echo $this->Session->flash(); ?>
+				<?php if (isset($currentUser)): ?>				
+					<div id="header">												
+						<div id="topNav">
+							<?php echo $this->Html->link('Dashboard', array('controller' => 'projects', 'action' => 'dashboard')); ?>
+							<?php echo $this->Html->link('Milestone', array('controller' => 'milestones', 'action' => 'index')); ?>
+							<?php echo $this->Html->link('Wiki', array('controller' => 'wikis', 'action' => 'index')); ?>						
+						</div>					
+						<div id="userInfo">Hi <?php echo $currentUser["User"]["username"]; ?> <?php echo $this->Html->link('Logout', array('controller'=>'users','action' => 'logout')); ?></div>
+						
+						<?php echo $this->Form->create('Project');?>
+						<?php echo $this->Form->input('Project', array('label'=>'','type'=>'select', 'selected' => $_SESSION["Project"]["id"]));?>
+						<?php echo $this->Form->end();?>		
+					</div>					
+				<?php endif; ?>
 				<div class="clear"></div>			
 				<h1><?php echo $title_for_layout; ?></h1>
 				<?php echo $content_for_layout; ?>

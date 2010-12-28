@@ -1,19 +1,20 @@
 <?php
 
 class Milestone extends AppModel {    
-    var $name = 'Milestone';          
+    var $name = 'Milestone';
+    var $actsAs = array('Containable');            
     var $hasMany = array(
     		'Task'=> array(
 	    		'className'=>'Task',
+    			'foreignKey' => 'milestone_id',
 	    		'order'    => 'Task.status ASC'
     		)
-    	);
-	var $actsAs = array('Containable');    	
+    	);	  
     	
     var $belongsTo = array(
     	'Project' =>array(
     		'className' => 'Project',
-    		'foreignKey' => 'project_id'    	
+    		'foreignKey' => 'project_id' 	
     	)
     );
     
@@ -29,6 +30,8 @@ class Milestone extends AppModel {
     }     
 
     function beforeSave($queryData){
+    	
+    	//add project_id
     	$this->data["Milestone"]["project_id"] = $_SESSION["Project"]["id"];
     	return true;
     }

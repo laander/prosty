@@ -39,6 +39,12 @@ ul#topNav li{
 	float:right;	
 }
 
+select#ProjectProject{
+	position:absolute;
+	right:150px;
+	top:8px;
+}
+
 /** general dashboard container **/
 .dashboard {
 	width: 500px;

@@ -4,8 +4,12 @@ class AppController extends Controller {
 
 	//make userinfo available in all views
 	function beforeRender(){		
-		$this->set('currentUser', $this->Auth->user());	
-		
+		if($this->Auth->user()){
+			$this->loadModel('Project');
+			$this->set('projects', $this->Project->find('list'));			
+			$this->set('currentUser', $this->Auth->user());
+		}
+			
 		//if no project is defined - redirect to dashboard (which will determine if any projects exists)
 		$excludeArray = array("Users", "Projects");
 		if(!isset($_SESSION["Project"]["id"]) && !in_array($this->name, $excludeArray)){

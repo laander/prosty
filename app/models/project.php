@@ -2,7 +2,7 @@
 
 class Project extends AppModel {
 	var $name = 'Project';
-	    var $actsAs = array('Containable');
+	    var $actsAs = array('Containable');	     
 	var $hasMany = array(
 		'Milestone' => array(
 			'className' => 'Milestone',

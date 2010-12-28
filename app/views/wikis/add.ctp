@@ -16,11 +16,6 @@ echo $this->Javascript->link("/js/tiny_mce_invoke.js", false);
 			
 		echo $this->Form->input('title');		
 		echo $this->Form->input('body', array("class"=>"tinymce"));		
-
-
-		
-
-
 	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Submit', true));?>

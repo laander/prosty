@@ -14,7 +14,7 @@ class ProjectsController extends AppController {
 	//var $scaffold;
 	
 	function index() {					
-		$this->set('projects', $this->paginate());
+		//$this->set('projects_menu', $this->Project->find('list'));
 	}
 			
 	function add($id = null) {		
@@ -34,20 +34,18 @@ class ProjectsController extends AppController {
 		}
 	}
 	
-	function view($id = null) {		
+	function view($id = null) {			
 	    //fetch this project
-		$project = $this->Project->read(null, $id);	
-
+	    $this->Project->unbindModel(array('hasMany' => array('Milestone', 'UserProject')));
+		$project = $this->Project->findById($id, array('fields'=>'id'));
+		
 		//project must exist!
 		if($project["Project"]["id"]!=$id){
-			$this->Session->setFlash('The requested project does not exist!');
+			$this->Session->setFlash('The requested project ('.$id.') does not exist!');
 	        $this->redirect(array('controller' => 'projects', 'action' => 'index'));
 		}else{		
-			$this->Session->write('Project.id', $id);		
-					
-			// save to view variable: paginate associated project items - with condition!
-		    $milestones = $this->paginate('Milestone', array('Milestone.project_id' => $id)); //return milestones associated to this project		   		   
-			$this->set(compact('project', 'milestones'));
+			$this->Session->write('Project.id', $id);
+			$this->redirect(array('controller' => 'projects', 'action' => 'dashboard'));							
 		}		
 	}
 	
@@ -101,8 +99,8 @@ class ProjectsController extends AppController {
 			$this->loadModel('Milestone');
 			
 			//only milestone with deadline in the future
-			$conditions = array("Milestone.deadline >=" => ".NOW()." );
-			$milestone = $this->Milestone->find('first', array('conditions'=>$conditions, "recursive"=>2, "contain"=>array("Task.User")));								
+			$conditions = array("Milestone.deadline >=" => ".NOW()." );			
+			$milestone = $this->Milestone->find('first', array('conditions'=>$conditions, "recursive"=>2, "contain"=>array("Task.User.username")));							
 			$this->set(compact('project','milestone','clients','consultants'));
 		}			
 	}

@@ -1,8 +1,14 @@
 <?php
 class TasksController extends AppController {
-	var $components = array('Session');
-	var $helpers = array ('Html','Form');
+	var $components = array('Session', 'RequestHandler');
+	var $helpers = array ('Html','Form','Ajax','Javascript');
 	var $name = 'Tasks';
+	var $belongsTo = array(    
+		'Assigned' => array(
+			'className' => 'User',
+			'foreignKey' => 'assigned_id'
+			)		
+		);
 	
 	//var $scaffold;
 	
@@ -59,6 +65,22 @@ class TasksController extends AppController {
 		}else{
 			$this->set("milestone_id", $milestone_id);
 		}
+	}	
+	
+	/*** edit ***/	
+	public function updateTitle()
+	{
+		if($this->params['isAjax']){
+			$this->data["Task"]["id"] = $this->params['form']['id'];
+        	$this->data["Task"]["title"] = $this->params['form']['value'];
+        	
+			if ($this->Task->save($this->data)) {
+				echo $this->data["Task"]["title"];
+			} else {
+	        	echo "Something went wrong!";
+			}
+			die();			
+		}		
 	}	
 		
 }

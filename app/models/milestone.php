@@ -1,6 +1,6 @@
 <?php
 
-class Milestone extends AppModel {
+class Milestone extends AppModel {    
     var $name = 'Milestone';          
     var $hasMany = array(
     		'Task'=> array(
@@ -8,6 +8,7 @@ class Milestone extends AppModel {
 	    		'order'    => 'Task.status ASC'
     		)
     	);
+	var $actsAs = array('Containable');    	
     	
     var $belongsTo = array(
     	'Project' =>array(

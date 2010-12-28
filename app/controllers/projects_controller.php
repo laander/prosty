@@ -102,7 +102,7 @@ class ProjectsController extends AppController {
 			
 			//only milestone with deadline in the future
 			$conditions = array("Milestone.deadline >=" => ".NOW()." );
-			$milestone = $this->Milestone->find('first', array('conditions'=>$conditions));								
+			$milestone = $this->Milestone->find('first', array('conditions'=>$conditions, "recursive"=>2, "contain"=>array("Task.User")));								
 			$this->set(compact('project','milestone','clients','consultants'));
 		}			
 	}

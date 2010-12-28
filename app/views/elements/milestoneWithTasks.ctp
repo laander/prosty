@@ -18,15 +18,29 @@ $right = $right==0 ? "" : $this->Html->link('All Milestones', array('controller'
 		<div class="tasks">
 			<?php foreach ($milestone['Task'] as $task):	?>
 					<p class="task<?php echo $task['status_text']; ?>">
-						<?php echo $this->Html->link($task['title'], array('controller' => 'tasks', 'action' => 'view', $task['id'])); ?>						
-						<?php
+						<?php echo $this->Html->link($task['title'], array('controller' => 'tasks', 'action' => 'view', $task['id'])); ?>												
+						<?php							
 							echo $html->image('checkmark.png', array(
 								'alt' => 'Change status',
 								'url' => array('controller' => 'tasks', 'action' => 'toggleStatus', $task['id']),
 								'class'=>'toggleStatus'
 								)
+							);
+						?>	
+						<?php							
+							if($task['assigned_id']==0){
+							echo $html->image('add.png', array(
+								'alt' => 'Become responsible for task',
+								'url' => array('controller' => 'tasks', 'action' => 'setAssignee', $task['id']),
+								'class'=>'toggleStatus'
+								)
 							); 	
-						?>					
+							}else{
+								?>
+								Assigned to <?php echo $task["User"]['username'] ?>
+								<?php
+							} 	
+						?>												
 					</p>
 			<?php endforeach; ?>
 		</div>		

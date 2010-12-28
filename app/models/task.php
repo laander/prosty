@@ -6,7 +6,7 @@ class Task extends AppModel {
     var $belongsTo = array(
     	'User' =>array(
     		'className' => 'User',
-    		'foreignKey' => 'created_by'    	
+    		'foreignKey' => 'assigned_id'    	
     	),
     	'Milestone' => array(
     		'className' => 'Milestone',

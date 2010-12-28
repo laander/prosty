@@ -16,12 +16,12 @@ class TasksController extends AppController {
 				$this->set('task', $this->Task->read(null, $id));
 	}	
 	
-	function toggleStatus($id=null) {
+	function toggleStatus($task_id=null) {
 		//set id
-		$this->data["Task"]["id"] = $id;
+		$this->data["Task"]["id"] = $task_id;
 		
 		//get current status
-		$old_status = $this->Task->findById($id, array('fields'=>'Task.status'));
+		$old_status = $this->Task->findById($task_id, array('fields'=>'Task.status'));
 		$old_status = $old_status["Task"]["status"];
 		
 		//toggle status
@@ -30,7 +30,21 @@ class TasksController extends AppController {
 		$this->Task->save($this->data);
 		die("s".$this->data["Task"]["status"]);						
 	}	
-	
+
+	function setAssignee($task_id=null) {
+		//set id
+		$this->data["Task"]["id"] = $task_id;
+				
+		//get userid
+		$user = $this->Auth->user();
+
+		//set assigned_id to user_id
+		$this->data["Task"]["assigned_id"] = $user["User"]["id"];		
+
+		//save
+		$this->Task->save($this->data);
+		$this->redirect(array('controller' => 'projects', 'action' => 'dashboard'));					
+	}
 	
 	function add($milestone_id = null) {
 		//data has been posted

@@ -6,12 +6,29 @@ $(document).ready(function() {
 			$(input).val(ui.value);				
 		},
 		stop: function(){
-			var input = $(this).parent().children('input').val();
+			var inputElm = $(this).parent().children('input');
+			var input = inputElm.val();
 			input = input ? input : 3;			
-			var secondInput = $("#costBenefit .slider").not(this).parent().children('input').val();
+			var secondInput = $("#costBenefit .slideContainer .slider").not(this).parent().children('input').val();
 			secondInput = secondInput ? secondInput : 3;
 			var total = input*secondInput;
-			writeHumanScore(total);							
+			writeHumanScore(total);
+			
+			/** update automatically when slider has been invoked - no need for any submit button **/
+			var doAjax = $("#costBenefit").hasClass("ajaxUpdate");			
+			if(doAjax){
+				var foreign_key = $("#foreign_key").val();
+				var field = $(inputElm).attr('id');
+				var callback = '#'+field+"Callback";				
+				var data = {'id':foreign_key, 'field':field, 'value':input, 'callbackText': 'Saved!'}; 
+				
+				$.post('/tasks/inlineEdit/'+foreign_key, data, function(response){
+					//$(callback).hide();
+					$(callback).html(response).fadeIn();	
+				});				
+			}
+				
+			
 		}
 	});	
 	

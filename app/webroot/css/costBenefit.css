@@ -42,3 +42,9 @@ p.header{
 #humanScore {
 	text-align:center;
 }
+
+.callback {
+	position:absolute;
+	left: 0;
+	top: 15;
+}

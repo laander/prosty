@@ -69,8 +69,7 @@ class TasksController extends AppController {
 	
 	/*** edit ***/	
 	public function inlineEdit()
-	{
-		
+	{			
 		if($this->params['isAjax']){
 						
 			$field = $this->params['form']['field'];
@@ -81,7 +80,20 @@ class TasksController extends AppController {
         	$this->data["Task"][$field] = $value;
         	
 			if ($this->Task->save($this->data) && $this->Task->hasField($field)) {
-				echo $value;
+				if(isset($this->params['form']['callbackText'])){
+					$this->Session->setFlash('The form was saved!');
+					//echo $this->params['form']['callbackText'];								
+				}else{
+					echo $value;
+				}
+				
+				echo "
+					<script>
+					$.get('/projects/ajaxflash', function(response){
+						$('#errorMsg').hide();
+						$('#errorMsg').html(response).fadeIn('slow').delay(2000).fadeOut();
+					});
+					</script>";
 			} else {
 	        	echo "Something went wrong!";
 			}

@@ -16,7 +16,7 @@
         ?>
 </head>
 <body>
-				<?php echo $this->Session->flash(); ?>
+				<div id="errorMsg"><?php echo $this->Session->flash(); ?></div>
 				<?php if (isset($currentUser)): ?>				
 					<div id="header">												
 						<div id="topNav">

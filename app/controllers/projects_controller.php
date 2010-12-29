@@ -12,7 +12,11 @@ class ProjectsController extends AppController {
 	
 	
 	//var $scaffold;
-	
+	    		
+	function ajaxflash() {					
+		$this->layout = "ajaxerror";		
+	}    		
+    		
 	function index() {					
 		//$this->set('projects_menu', $this->Project->find('list'));
 	}

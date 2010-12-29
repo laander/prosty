@@ -15,21 +15,24 @@ $options['submitdata'] = array('id'=> $task['Task']['id'], 'field'=>'title');
 echo $ajax->editor("title_".$task['Task']['id'], array(), $options);
 ?>
 
+
 Description:<div class="edit" id="desc_<?php echo $task['Task']['id']; ?>"><?php echo $task['Task']['description']; ?></div>
 <?php
 $options['submitdata'] = array('id'=> $task['Task']['id'], 'field'=>'description');
 echo $ajax->editor("desc_".$task['Task']['id'], array(),$options);
 ?>
-
-
-<div id="costBenefit">
+<input type="hidden" id="foreign_key" value="<?=$task['Task']['id']?>"/>
+				
+<div id="costBenefit" class="ajaxUpdate">	
 	<div class="slideContainer">
 		<p class="header">Importance of feature</p>
 		<p class="slideTags left">Careless</p>
 		<div class="slider"></div>
 		<p class="slideTags right">Very important</p>
 		<?php echo $this->Form->hidden('priority', array('value'=>$task['Task']['priority']));?>
+		<div id="priorityCallback" class="callback"></div>		
 	</div>
+	
 
 	<div class="slideContainer">
 		<p class="header">Difficulty of implementation</p>
@@ -37,6 +40,7 @@ echo $ajax->editor("desc_".$task['Task']['id'], array(),$options);
 		<div class="slider"></div>
 		<p class="slideTags right">Piece of cake</p>
 		<?php echo $this->Form->hidden('estimate', array('value'=>$task['Task']['estimate']));?>
+		<div id="estimateCallback" class="callback"></div>
 	</div>
 	<p id="humanScore"></p>
 </div>

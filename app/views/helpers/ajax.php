@@ -1063,7 +1063,22 @@ class AjaxHelper extends AppHelper {
  * @param array $options Array of options to control the editor (see link).
  * @link          http://www.appelsiini.net/projects/jeditable
  */
-	function editor($id, $url, $options = array()) {
+	function editor($id, $url = array(), $options = array()) {
+
+			/** set default values **/
+			$url_default = array('controller' => $this->params["controller"], 'action' => 'inlineEdit');					
+			$options_default = array(
+			'indicator' => '<img src="/img/indicator.gif">',
+			'submit' => 'OK',
+			'style' => 'inherit',
+			'tooltip' => 'Click to edit...'
+			);
+			
+			//merge and overwrite default values
+			$url = array_merge($url_default, $url);
+			$options = array_merge($options_default, $options);	
+		
+		
 		$url = $this->url($url);
 		
 		if (isset($options['ajaxoptions'])){

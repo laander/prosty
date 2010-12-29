@@ -15,11 +15,12 @@
 			<div class="advancedOptions">
 				<?php echo $this->Html->link("Show less", array(), array('class'=>'showLess', 'rel'=>'advancedOptions')); ?>
 				<?php echo $this->Form->input('description', array('rows'=>1));	?>
+				
 				<div id="costBenefit">
 					<div class="slideContainer">
 						<p class="header">Importance of feature</p>
 						<p class="slideTags left">Careless</p>
-						<div id="importance"></div>
+						<div class="slider"></div>
 						<p class="slideTags right">Very important</p>
 						<?php echo $this->Form->hidden('priority');?>
 					</div>
@@ -27,7 +28,7 @@
 					<div class="slideContainer">
 						<p class="header">Difficulty of implementation</p>
 						<p class="slideTags left">Very difficult</p>
-						<div id="difficulty"></div>
+						<div class="slider"></div>
 						<p class="slideTags right">Piece of cake</p>
 						<?php echo $this->Form->hidden('estimate'); ?>
 					</div>
@@ -35,6 +36,8 @@
 					<input type="hidden" id="conclusion"/>
 					<p id="humanScore"></p>
 				</div>
+				
+				
 			</div>
 		<?php echo $this->Form->end(__('Submit', true));?>		
 	</div>

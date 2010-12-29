@@ -1,49 +1,45 @@
+<?php echo $this->Html->css('jqueryui.css'); ?>
+<?php echo $this->Html->css('costBenefit.css'); ?>
+<?php echo $this->Javascript->link("costBenefit.js", false); ?>
+<?php echo $this->Javascript->link("jqueryui-1.8.7.js", false); ?>
 <?php echo $this->Html->script('jquery.jeditable.mini.js', false); ?>
 
 <div class="tasks view">
 <h2><?php  __('Task');?></h2>
-	<dl><?php $i = 0; $class = ' class="altrow"';?>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Title'); ?></dt>
-		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
 
-
-<div class="edit" id="task_<?php echo $task['Task']['id']; ?>"><?php echo $task['Task']['title']; ?></div>
-
+Title:
+<div class="edit" id="title_<?php echo $task['Task']['id']; ?>"><?php echo $task['Task']['title']; ?></div>
 <?php
-echo $ajax->editor("task_".$task['Task']['id'], 
-    array( 
-        'controller' => 'tasks', 
-        'action' => 'updateTitle',
-    ), 
-    array(
-        'indicator' => '<img src="/img/indicator.gif">',
-        'submit' => 'OK',
-        'style' => 'inherit',
-        'submitdata' => array('id'=> $task['Task']['id']),
-        'tooltip'   => 'Click to edit...'
-        )
-);
-	?>  			
-			
-			&nbsp;
-		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Description'); ?></dt>
-		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $task['Task']['description']; ?>
-			&nbsp;
-		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Estimate'); ?></dt>
-		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $task['Task']['estimate']; ?>
-			&nbsp;
-		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Priority'); ?></dt>
-		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $task['Task']['priority']; ?>
-			&nbsp;
-		</dd>
-	</dl>
-</div>
-<?php
-	echo $this->requestAction("/comments/comments/index/Task/".$task['Task']['id'], array('return')); 
+//title specific options
+$options['submitdata'] = array('id'=> $task['Task']['id'], 'field'=>'title');
+echo $ajax->editor("title_".$task['Task']['id'], array(), $options);
 ?>
+
+Description:<div class="edit" id="desc_<?php echo $task['Task']['id']; ?>"><?php echo $task['Task']['description']; ?></div>
+<?php
+$options['submitdata'] = array('id'=> $task['Task']['id'], 'field'=>'description');
+echo $ajax->editor("desc_".$task['Task']['id'], array(),$options);
+?>
+
+
+<div id="costBenefit">
+	<div class="slideContainer">
+		<p class="header">Importance of feature</p>
+		<p class="slideTags left">Careless</p>
+		<div class="slider"></div>
+		<p class="slideTags right">Very important</p>
+		<?php echo $this->Form->hidden('priority', array('value'=>$task['Task']['priority']));?>
+	</div>
+
+	<div class="slideContainer">
+		<p class="header">Difficulty of implementation</p>
+		<p class="slideTags left">Very difficult</p>
+		<div class="slider"></div>
+		<p class="slideTags right">Piece of cake</p>
+		<?php echo $this->Form->hidden('estimate', array('value'=>$task['Task']['estimate']));?>
+	</div>
+	<p id="humanScore"></p>
+</div>
+
+<?php //echo $this->requestAction(array('plugin'=>'comments', 'controller' => 'comments', 'action' => "index"), array('return')); ?>
+<?php echo $this->requestAction("/comments/comments/index/Task/".$task['Task']['id'], array('return')); ?>

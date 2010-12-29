@@ -68,14 +68,20 @@ class TasksController extends AppController {
 	}	
 	
 	/*** edit ***/	
-	public function updateTitle()
+	public function inlineEdit()
 	{
+		
 		if($this->params['isAjax']){
-			$this->data["Task"]["id"] = $this->params['form']['id'];
-        	$this->data["Task"]["title"] = $this->params['form']['value'];
+						
+			$field = $this->params['form']['field'];
+			$id = $this->params['form']['id'];
+			$value = $this->params['form']['value'];			
+			
+			$this->data["Task"]["id"] = $id;
+        	$this->data["Task"][$field] = $value;
         	
-			if ($this->Task->save($this->data)) {
-				echo $this->data["Task"]["title"];
+			if ($this->Task->save($this->data) && $this->Task->hasField($field)) {
+				echo $value;
 			} else {
 	        	echo "Something went wrong!";
 			}

@@ -15,5 +15,3 @@ $session->flash();
 	</fieldset>
 <?php echo $form->end('Submit');?>
 </div>
-<?php echo $html->link('Demo', array('controller'=>'comments','action'=>'add',$_foreignKey), array('class'=>'js-ajax')); ?>
-

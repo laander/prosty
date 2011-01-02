@@ -1,112 +1,146 @@
 <?php
 class ProjectsController extends AppController {
-	var $components = array('Session');
-	var $helpers = array ('Html','Form','Javascript'); 
-	
 	var $name = 'Projects';
+	var $components = array('Session');
+	var $helpers = array ('Time', 'Html','Form','Ajax','Javascript');
+	
     var $paginate = array(
-    		'Project' => array(
-    			'limit' => 20,
-    			'order' => array('Project.id' => 'asc')
-    		));
-	
-	
-	//var $scaffold;
-	    		
-	function ajaxflash() {					
-		$this->layout = "ajaxerror";		
-	}    		
-    		
-	function index() {					
-		//$this->set('projects_menu', $this->Project->find('list'));
+		'Project' => array(
+			'limit' => 20,
+			'order' => array('Project.id' => 'asc')
+		));
+			    		    		
+	function index() {
+		$allProjects = $this->Project->find('all', array(
+			'recursive' => 1));
+		$this->set('allProjects', $allProjects);
 	}
 			
-	function add($id = null) {		
-		$this->loadModel('User');
-		$users = $this->User->find('list');
-		$this->set(compact('users'));	
-		
+	function add() {		
+								
 		if (!empty($this->data)) {								
-			//rearrange array for saveAll (relational) save
-			foreach($this->data['UserProject']["user_id"] as $key=>$user_id){
-				$this->data['UserProject'][$key]['user_id'] = $this->data['UserProject']["user_id"][$key];
-			}			
-			unset($this->data['UserProject']["user_id"]); //remove original records				
-			
-			//save parent (Project) and relational (UserProject) records 
-			$this->Project->saveAll($this->data);			
+			$this->Project->create();
+			if ($this->Project->saveAll($this->data)) {
+				$this->Session->setFlash(__('The project has been created', true));
+				$this->redirect(array('action' => 'index'));			
+			} else {
+				$this->Session->setFlash(__('The project could not be created. Please, try again.', true));
+			}						
+		}
+		$users = $this->Project->User->find('list', array('fields' => array('id', 'username')));
+		$this->set(compact('users'));
+		
+	}
+	
+	// Will take a supplied project id, set is as a new current and redirect to dashboard
+	function view($id = null) {
+		
+		if ($id != null) {
+			if ($this->setCurrentProject($id)) { // new current project has been set
+				$this->redirect(array('controller' => 'projects', 'action' => 'dashboard'));
+			} else { // couldnt set supplied id as current project, probably doesn't exist
+				$this->redirect(array('controller' => 'projects', 'action' => 'index'));
+			}		
+		} else { // no id supplied, return to the dashboard
+			$this->redirect(array('controller' => 'projects', 'action' => 'dashboard'));		
 		}
 	}
 	
-	function view($id = null) {			
-	    //fetch this project
-	    $this->Project->unbindModel(array('hasMany' => array('Milestone', 'UserProject')));
-		$project = $this->Project->findById($id, array('fields'=>'id'));
+	function edit($id = null) {
+		if (!$id && empty($this->data)) {
+			$this->Session->setFlash(__('Invalid project', true));
+			$this->redirect(array('action' => 'index'));
+		}
+		if (!empty($this->data)) {
+			if ($this->Project->save($this->data)) {
+				$this->Session->setFlash(__('The project has been saved', true));
+				$this->redirect(array('action' => 'dashboard'));
+			} else {
+				$this->Session->setFlash(__('The project could not be saved. Please, try again.', true));
+			}
+		}
+		if (empty($this->data)) {
+			$this->data = $this->Project->read(null, $id);
+		}
+		$project['Project']['id'] = $id;
+		$users = $this->Project->User->find('list', array('fields' => array('id', 'username')));
+		$this->set(compact('users', 'project'));
+	}	
+
+	function delete($id = null) {
+		if (!$id) {
+			$this->Session->setFlash(__('Invalid id for project', true));
+			$this->redirect(array('action'=>'index'));
+		}
+		if ($this->Project->delete($id)) {
+			$this->Session->setFlash(__('Project deleted', true));
+			$this->redirect(array('action'=>'index'));
+		}
+		$this->Session->setFlash(__('Project was not deleted', true));
+		$this->redirect(array('action' => 'index'));
+	}
+
+	
+	function dashboard() {
 		
-		//project must exist!
-		if($project["Project"]["id"]!=$id){
-			$this->Session->setFlash('The requested project ('.$id.') does not exist!');
-	        $this->redirect(array('controller' => 'projects', 'action' => 'index'));
-		}else{		
-			$this->Session->write('Project.id', $id);
-			$this->redirect(array('controller' => 'projects', 'action' => 'dashboard'));							
+		// Get current project data
+		$currentProjectId = $this->currentProject('id');
+		$project = $this->Project->find("first", array(
+			"recursive" => 2,
+			"conditions" => array("Project.id" => $currentProjectId),
+			"contain" => array("User")
+		));
+						
+		// Figure out which users are connected to the project, split by type
+		$clients = array();
+		$consultants = array();
+		foreach ($project["User"] as $users) {
+			$role_id = $users["role_id"];
+			if ($role_id == 3){ // role id 3 is a client
+				$clients[] = $users;
+ 			} else {
+				$consultants[] = $users;
+			}
+		}
+
+		// Get latest milestone for dashboard view
+		$milestone = $this->Project->Milestone->find("first", 
+			array(
+				"recursive" => 2,
+				"conditions" => array("Milestone.deadline >=" => ".NOW()." ), 
+				"contain" => array("Task.User")
+		));
+		
+		// Set view variables
+		$this->set(compact('project','milestone','clients','consultants'));
+	}
+	
+	// Used for inline editing, called using ajax
+	function ajaxJEdit() {			
+		if($this->params['isAjax']){
+						
+			$id = $this->params['form']['id'];
+			$field = $this->params['form']['field'];
+			$value = $this->params['form']['value'];			
+			
+			$this->data["Project"]["id"] = $id;
+        	$this->data["Project"][$field] = $value;
+        	
+			if ($this->Project->save($this->data) && $this->Project->hasField($field)) {
+				$this->Session->setFlash('The project was updated!');
+			}
+			echo $value;
+			die();			
 		}		
 	}
 	
+	// Creates a flash message if supplied and echos the flash message again
+	function ajaxFlash($text = null) {
+		if ($text != null) {
+			$this->Session->setFlash($text);
+		}
+		$this->layout = "ajax_flash";
+	}		
 	
-	function dashboard($id = null){
-		
-		//precaution if no id is supplied - try recent id else any allowed id
-		if(!$id){
-			if($this->Session->read('Project.id')){
-				$id = $this->Session->read('Project.id');	
-			}else{
-				$this->Project->unbindModel(array('hasMany' => array('Milestone','UserProject')));
-				$temp_project = $this->Project->find('first', array('fields'=>'id'));
-				$id = $temp_project["Project"]["id"];
-			}			 
-		}
-		
-	    // remove association with Milestone (for optimization)
-	    $this->Project->unbindModel(array('hasMany' => array('Milestone')));
-					
-	    //fetch this project
-		$project = $this->Project->find('first', array(
-			'recursive'=>2,
-			'conditions' => array('Project.id'=>$id),
-		));
-		
-		$clients = array();
-		$consultants = array();					
-		foreach($project["UserProject"] as $users){			
-			$username = $users["User"]["username"];
-			$user_id = $users["User"]["id"];
-			$role_id = $users["User"]["role_id"];
-			
-			//user is a client
-			if($role_id==3){
-				$clients[$user_id] = $username;
-			}else{
-				$consultants[$user_id] = $username;
-			}
-		}
-		
-		//project must exist!
-		if($project["Project"]["id"]!=$id || !$id){
-			$this->Session->setFlash('The requested project does not exist!');
-	        $this->redirect(array('controller' => 'projects', 'action' => 'index'));
-		}else{						
-			$this->Session->write('Project.id', $id);   		  
-			
-			/*** get upcoming milestone **************************************/
-			$this->helpers[] = 'Time';
-			$this->loadModel('Milestone');
-			
-			//only milestone with deadline in the future
-			$conditions = array("Milestone.deadline >=" => ".NOW()." );			
-			$milestone = $this->Milestone->find('first', array('conditions'=>$conditions, "recursive"=>2, "contain"=>array("Task.User.username")));							
-			$this->set(compact('project','milestone','clients','consultants'));
-		}			
-	}
 }
 ?>

@@ -1,8 +1,8 @@
 <?php
 class WikisController extends AppController {
+	var $name = 'Wikis';
 	var $helpers = array ('Html','Form', 'Javascript');
 	var $components = array('Session');
-	var $name = 'Wikis';
 	var $uses = array('Wiki','Milestone');
 	
 	function index() {
@@ -25,8 +25,11 @@ class WikisController extends AppController {
 	}
 
 	function add($parent_id = null) {
-		
 		if (!empty($this->data)) {
+			// set related project as the current project if not defined		
+			if (!isset($this->data['Wiki']['project_id'])) {
+				$this->data['Wiki']['project_id'] = $this->currentProject('id');
+			}		
 			$this->Wiki->create();
 			if ($this->Wiki->save($this->data)) {
 				$this->Session->setFlash(__('The wiki has been saved', true));
@@ -51,6 +54,10 @@ class WikisController extends AppController {
 			$this->redirect(array('action' => 'index'));
 		}
 		if (!empty($this->data)) {
+			// set related project as the current project if not defined		
+			if (!isset($this->data['Wiki']['project_id'])) {
+				$this->data['Wiki']['project_id'] = $this->currentProject('id');
+			}		
 			if ($this->Wiki->save($this->data)) {
 				$this->Session->setFlash(__('The wiki has been saved', true));
 				$this->redirect(array('action' => 'index'));
@@ -61,7 +68,7 @@ class WikisController extends AppController {
 		if (empty($this->data)) {
 			$this->data = $this->Wiki->read(null, $id);
 		}
-		$users = $this->Wiki->User->find('list');
+		//$users = $this->Wiki->User->find('list');
 		$parents = $this->Wiki->Parent->find('list');
 		$this->set(compact('users', 'parents'));
 	}

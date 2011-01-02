@@ -85,7 +85,7 @@
  *
  * [Note Routing.admin is deprecated in 1.3.  Use Routing.prefixes instead]
  */
-	Configure::write('Routing.prefixes', array('prosty.com/admin/controller'));
+	Configure::write('Routing.prefixes', array('/admin/controller'));
 
 /**
  * Turn off all caching application-wide.

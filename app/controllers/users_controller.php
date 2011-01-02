@@ -1,7 +1,7 @@
 <?php
 class UsersController extends AppController {
-	var $components = array('Session');
 	var $name = 'Users';
+	var $components = array('Session');
 		
     function beforeFilter() {
         parent::beforeFilter();

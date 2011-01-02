@@ -1066,12 +1066,18 @@ class AjaxHelper extends AppHelper {
 	function editor($id, $url = array(), $options = array()) {
 
 			/** set default values **/
-			$url_default = array('controller' => $this->params["controller"], 'action' => 'inlineEdit');					
+			$url_default = array('controller' => $this->params["controller"], 'action' => 'ajaxjedit');					
 			$options_default = array(
-			'indicator' => '<img src="/img/indicator.gif">',
-			'submit' => 'OK',
-			'style' => 'inherit',
-			'tooltip' => 'Click to edit...'
+				'style' => 'inherit',
+				'width' => '95%',
+				'onblur' => 'ignore',
+				'height' => 'none',
+				'rows' => 10,
+				'tooltip' => 'Click to edit...',
+				'cssclass' => 'inline-edit',
+				'cancel' => '<span class="jedit-cancel">Cancel</span>',
+				'submit' => '<input class="ajax-button button" type="submit" value="Save" />',
+			    'callback' => 'updateFlashMessage();'
 			);
 			
 			//merge and overwrite default values

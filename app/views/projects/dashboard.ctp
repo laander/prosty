@@ -1,33 +1,55 @@
-<?php /***************** PROJECT INFO **************************/ ?>
+<?php // Request necessary js logic for inline editing using jEditable ?>
+<?php echo $this->Javascript->link("/js/jquery.jeditable.mini.js", false); ?>
 
-<div class="dashboard projectInfo">
-	<div class="header"><h2><?php  __('Project');?></h2></div>
-	<table>		
-		<tr><td>Project</td><td><?php echo $project['Project']['title']; ?></td></tr>
-		<tr><td>Description</td><td><?php echo $project['Project']['description']; ?></td></tr>
-		<tr><td>Github</td><td><?php echo $project['Project']['github']; ?></td></tr>
-		<tr><td>Website</td><td><?php echo $project['Project']['siteurl']; ?></td></tr>
-		<tr>
-			<td>Client(s)</td>
-			<td><?php foreach($clients as $id=>$username): ?>
-			 		<?php echo $this->Html->link($username, array('controller'=>'users','action' => 'view', $id)); ?>
-			 	<?php endforeach; ?>
-			</td>
-		</tr>
-		<tr><td>Consultant(s)</td><td>
-				<?php foreach($consultants as $id=>$username): ?>
-			 		<?php echo $this->Html->link($username, array('controller'=>'users','action' => 'view', $id)); ?>
-			 	<?php endforeach; ?>
-		</td></tr>
-	</table>
+<?php // Project Details box ?>
+<div class="context-project-details box-half">
+	<p class="box-title">Project Details</p>
+	<p class="box-meta">
+		<?php echo $this->Html->link("Edit Details", array('controller'=>'projects', 'action' => 'edit', $project['Project']['id'])); ?>
+	</p>															
+	<div class="box-content">
+		<div class="projects view">
+			<?php echo $this->Html->image("project-logo.png", array("class" => "project-logo")); ?>
+			<div class="field text">
+				<h2 class="fieldvalue jeditable" id="jedit_title-<?php echo $project['Project']['id']; ?>"><?php echo $project['Project']['title']; ?></h2>
+				<?php
+					$options['submitdata'] = array('id'=> $project['Project']['id'], 'field'=>'title');					
+					echo $ajax->editor("jedit_title-".$project['Project']['id'], array(), $options);
+				?>				
+			</div>
+			<div class="field text">
+				<p class="fieldvalue jeditable" id="jedit_description-<?php echo $project['Project']['id']; ?>"><?php echo $project['Project']['description']; ?></p>
+				<?php
+					$options['submitdata'] = array('id'=> $project['Project']['id'], 'field'=>'description');					
+					$options['type'] = 'textarea';
+					echo $ajax->editor("jedit_description-".$project['Project']['id'], array(), $options);
+				?>				
+			</div>
+			<div class="field link">
+				<span class="label">Website:</span>
+				<a class="fieldvalue" href="<?php echo $project['Project']['siteurl']; ?>"><?php echo $project['Project']['siteurl']; ?></a>
+			</div>
+			<div class="field link">
+				<span class="label">Github:</span>
+				<a class="fieldvalue" href="<?php echo $project['Project']['github']; ?>"><?php echo $project['Project']['github']; ?></a>
+			</div>
+			<div class="field users">
+				<span class="label">Clients:</span>
+				<?php foreach($clients as $client) {
+					echo $this->element('users_profilelink', array('user' => $client));
+				} ?>
+			</div>
+			<div class="field users">
+				<span class="label">Agents:</span>
+				<?php foreach ($consultants as $consultant) {
+					echo $this->element('users_profilelink', array('user' => $consultant));
+				} ?>
+			</div>
+		</div>
+		<div class="clearfix"></div>									
+	</div>
 </div>
 
-<?php /***************** UPCOMING MILESTONE **************************/ ?>
-<?php
-if(is_array($milestone)){
-	echo $this->element('milestoneWithTasks', array("milestone" => $milestone, "header"=>"Upcoming: ", "left"=>1, "right"=>1));
-	echo $this->element('addTaskWindow');
-}else{
-	echo $this->element('milestoneWithTasks', array("milestone" => false, "header"=>"Upcoming milestone", "left"=>0, "right"=>1));
-}
-?>
+<?php // Next milestone ?>
+<?php echo $this->element('milestones_quickindex', array('milestone' => $milestone, 'box_title' => 'Next Milestone')); ?>
+<?php echo $this->element('tasks_quickadd'); ?>

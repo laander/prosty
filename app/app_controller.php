@@ -2,7 +2,6 @@
 class AppController extends Controller {
 	var $components = array('Auth','RequestHandler');
 	var $currentUser = "";
-	var $currentProject;
 	
 	function beforeRender(){		
 		
@@ -42,8 +41,8 @@ class AppController extends Controller {
 		$this->set('projects', $this->Project->find('list'));
 	}
 
-	// Will return current user or redirect to login if not available.
-	// Call with a specified field as argument or else it will return the fields as an array (e.g. $user['id'])
+	// Will return current user or false if not available.
+	// Call with a specified field as argument ($this->currentUser('id')) or else it will return all fields as an array (e.g. $user['id'])
 	function currentUser($field = null) {
 		if($this->Auth->user()) {
 			$currentUser = $this->Auth->user();
@@ -58,8 +57,8 @@ class AppController extends Controller {
 	}
 	
 	
-	// Will return current project or redirect to choose if not available.
-	// Call with a specified field as argument or else it will return the fields as an array (e.g. $project['id'])
+	// Will return current project or false if not available.
+	// Call with a specified field as argument ($this->currentProject('id')) or else it will return all fields as an array (e.g. $project['id'])
 	function currentProject($field = null) {
 		if (isset($_SESSION["Project"]["id"])) {
 			$currentProjectId = $_SESSION["Project"]["id"];

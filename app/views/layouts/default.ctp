@@ -131,7 +131,6 @@
 						<?php echo $this->Html->link($this->params['action'], array('action' => $this->params['action'])); ?>						
 						<br />
 						<?php echo $this->element('sql_dump'); ?>'
-						<?php debug(); ?>						
 					</div>
 				</div>
 			</div>			

@@ -93,7 +93,7 @@ echo $ajax->editor("desc_".$task['Task']['id'], array(),$options);
 						$id = $user["UserProject"]["user_id"];
 						$options[$id] = $user["username"];		
 					}
-					echo $form->select('assigned', array($options), $selected, array('empty' => false)); 
+					echo $form->select('assigned', array($options), $selected, array('empty' => '-')); 
 					echo $form->end();
 					echo $ajax->observeForm('TaskViewForm', 
 					    array(

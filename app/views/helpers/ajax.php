@@ -1072,7 +1072,7 @@ class AjaxHelper extends AppHelper {
 				'width' => '95%',
 				'onblur' => 'ignore',
 				'height' => 'none',
-				'rows' => 10,
+				'rows' => 1,
 				'tooltip' => 'Click to edit...',
 				'cssclass' => 'inline-edit',
 				'cancel' => '<span class="jedit-cancel">Cancel</span>',

@@ -5,11 +5,10 @@ class TasksController extends AppController {
 	var $helpers = array ('Html','Form','Ajax','Javascript');
 	
 	function view($id=null) {		
-		$task = $this->Task->find('first',array(
+		$task = $this->Task->find('first', array(
 			'conditions' => array('Task.id' => $id),
 			'recursive' => 4,
 			'contain' => array('Milestone.Project.User.username')
-			
 		));
 		$this->set('task', $task);
 	}	
@@ -45,7 +44,7 @@ class TasksController extends AppController {
 		}
 		if (empty($this->data)) {
 			$milestones = $this->Task->Milestone->find('list', array('conditions' => array('Milestone.project_id' => $this->currentProject('id'))));
-			$users = $this->Task->Assigned->find('list');
+			$users = $this->Task->Milestone->Project->User->find('list');
 			$task['Task']['id'] = $id;			
 			$this->set(compact('milestones', 'users', 'task'));		
 			$this->data = $this->Task->read(null, $id);

@@ -15,7 +15,8 @@
 				echo $this->Form->input('title');
 				echo $this->Form->input('milestone_id');
 				echo $this->Form->input('description');
-				echo $this->Form->input('user', array('label' => 'Assigned to'));
+				echo $this->Form->label('assigned_id');
+				echo $this->Form->select('assigned_id', $users, $this->data['Task']['assigned_id'], array('empty' => '-')); 
 				echo $this->Form->input('status');				
 			?>
 			<div class="field customslider">

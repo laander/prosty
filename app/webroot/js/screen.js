@@ -171,14 +171,20 @@ function tasksQuickAddModal() {
 			title: "Quick Task",
 			inline: true,
 			href: "#context-tasks-quickadd",
-			transition: "none",
+			transition: "fade",
 			opacity: 0.4,
-			speed: 500},
+			scrolling: false,
+			speed: 300},
 			function(){
 				$('#TaskTitle').focus();
+				$('textarea').autoResize({animate: false, extraSpace: 10, onResize: function() {
+					$.colorbox.resize();
+					$(this).focus();						
+				}});
 			});
 	});
-	/** show/hide div **/
+/*	
+	// Show/hide more options button
 	$("a.showMore").click(function(){		
 		var divClass = $(this).attr('rel');		
 		$("."+divClass).fadeIn();		
@@ -192,22 +198,26 @@ function tasksQuickAddModal() {
 		$("a.showMore").show();
 		$.colorbox.resize();
 		return false;
-	});		
+	});
+*/		
 };
 
 function resizeTextareas() {
-	/* resize textareas automatically */
-	$('textarea').not('.tinymce').not('#context-tasks-quickadd textarea').each(function() {
-		$(this).autoResize();
+	// resize textarea fields automatically according to content
+	$('textarea').not('.tinymce').each(function() {
+		$(this).autoResize({animate: false, extraSpace: 10});
+		$(this).keydown();
+	});
+	$('form.inline-edit textarea').live('focus', function() { // small hack for jeditable inline editing fields
+		$(this).autoResize({animate: false, extraSpace: 10});
 		$(this).keydown();
 	});
 }
 
 function projectSelector() {
-	/** change project selctor **/
+	// change project selector dropdown
 	$('.project-selector select').change(function() {
 		var project_id = $(this).val();
-        //$(location).attr('href', '/projects/views/'+project_id);
 		window.location = base() + '/projects/view/' + project_id;
 	}); 
 }

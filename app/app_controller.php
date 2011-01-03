@@ -1,7 +1,6 @@
 <?php
 class AppController extends Controller {
 	var $components = array('Auth','RequestHandler');
-	var $currentUser = "";
 	
 	function beforeRender(){		
 		

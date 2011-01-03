@@ -112,7 +112,7 @@ class ProjectsController extends AppController {
 			array(
 				"recursive" => 2,
 				"conditions" => array("Milestone.deadline >=" => ".NOW()." ), 
-				"contain" => array("Task.User")
+				"contain" => array("Task.Assigned")
 		));
 		
 		// Set view variables
@@ -127,6 +127,20 @@ class ProjectsController extends AppController {
 			$field = $this->params['form']['field'];
 			$value = $this->params['form']['value'];			
 			
+
+			//only milestone with deadline in the future
+			$conditions = array("Milestone.deadline >=" => ".NOW()." );			
+			$milestone = $this->Milestone->find('first', array('conditions'=>$conditions, "recursive"=>2, "contain"=>array("Task.Assigned.username")));							
+			$this->set(compact('project','milestone','clients','consultants'));
+		}		
+
+
+	
+/*
+
+//Git merge conflict - commented out due to unknown solution
+
+
 			$this->data["Project"]["id"] = $id;
         	$this->data["Project"][$field] = $value;
         	
@@ -136,6 +150,7 @@ class ProjectsController extends AppController {
 			echo $value;
 			die();			
 		}		
+*/
 	}
 	
 	// Creates a flash message if supplied and echos the flash message again

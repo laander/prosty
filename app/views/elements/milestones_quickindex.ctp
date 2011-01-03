@@ -56,7 +56,7 @@
 											array('controller' => 'tasks', 'action' => 'ajaxSetAsAssigned', $task['id']), 
 											array('class' => "task-assigned", 'escape' => false));										
 										} else {
-											echo $this->element('users_profilelink', array('user' => $task["User"]));
+											echo $this->element('users_profilelink', array('user' => $task["Assigned"]));
 										} 	
 									?>							
 									</span>

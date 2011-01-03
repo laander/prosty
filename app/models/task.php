@@ -1,9 +1,10 @@
 <?php
 class Task extends AppModel {
-    var $name = 'Task';    
-       
+   	var $name = 'Task';    
+	var $actsAs = array('Containable');            
+    
     var $belongsTo = array(
-    	'User' =>array(
+    	'Assigned' =>array(
     		'className' => 'User',
     		'foreignKey' => 'assigned_id'    	
     	),

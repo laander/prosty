@@ -3,15 +3,22 @@ class TasksController extends AppController {
 	var $name = 'Tasks';
 	var $components = array('Session', 'RequestHandler');
 	var $helpers = array ('Html','Form','Ajax','Javascript');
-		
-	function index() {
-		$this->redirect(array('controller' => 'milestones', 'action' => 'index'));
-	}
+
 	
-	function view($id = null) {		
-		$this->set('task', $this->Task->read(null, $id));
+	//var $scaffold;
+	
+	function view($id=null) {		
+				$task = $this->Task->find('first',array(
+					'conditions' => array('Task.id' => $id),
+					'recursive' => 4,
+					'contain' => array('Milestone.Project.User.username')
+					
+				));	
+				$this->set('task', $task);
 	}	
 		
+
+/*
 	function add() {
 		if (!empty($this->data)) {														
 			if ($this->Task->save($this->data)) {
@@ -27,6 +34,8 @@ class TasksController extends AppController {
 			$this->set(compact('milestones', 'users'));		
 		}
 	}
+
+*/
 
 	function edit($id = null) {
 		if (!$id && empty($this->data)) {
@@ -88,15 +97,56 @@ class TasksController extends AppController {
 	}	
 
 	// Set current user as assigned, called using ajax
-	function ajaxSetAsAssigned($task_id = null) {
-		//set id
-		$this->data["Task"]["id"] = $task_id;
-				
-		//get userid
-		$user = $this->Auth->user();
+	function ajaxSetAsAssigned($task_id = null) {			
+		if($this->params['isAjax']){
+			//set id
+			$this->data["Task"]["id"] = $task_id;		
 
-		//set assigned_id to user_id
-		$this->data["Task"]["assigned_id"] = $user["User"]["id"];		
+			//if no assigned_id is supplied, assign to current user
+			 
+			if(!$this->data["Task"]["assigned"]){
+				//get userid
+				$user = $this->Auth->user();
+		
+				//set assigned_id to user_id
+				$this->data["Task"]["assigned_id"] = $user["User"]["id"];		
+			}else{
+				$this->data["Task"]["assigned_id"] = $this->data["Task"]["assigned"];
+			}
+			//save
+			$this->Task->save($this->data);	
+			$this->Session->setFlash('The assigner was updated');
+			echo"
+				
+					$.get('/projects/ajaxflash', function(response){
+						$('#errorMsg').hide();
+						$('#errorMsg').html(response).fadeIn('slow').delay(2000).fadeOut();
+					});";
+			
+			die();
+		}
+		//if not ajax: redirect to frontpage
+		$this->redirect(array('controller' => 'projects', 'action' => 'dashboard'));					
+	}
+	
+	function add($milestone_id = null) {
+
+
+/*
+		//data has been posted
+		if (!empty($this->data)) {														
+			if ($this->Task->save($this->data)) {
+				$this->Session->setFlash(__('The task has been saved', true));
+				$this->redirect(array('controller'=>'projects','action' => 'dashboard'));
+			} else {
+				$this->Session->setFlash(__('The task could not be saved. Please, try again.', true));
+			}			
+		//no data has been posted yet	
+		}else{
+			$this->set("milestone_id", $milestone_id);
+
+*/
+
 
 		//save
 		if($this->Task->save($this->data)) {
@@ -106,6 +156,7 @@ class TasksController extends AppController {
 			$this->Session->setFlash(__("Couldn't assign you the task", true));		
 			die("0");
 		}
+
 /*		if ($this->params['isAjax']) {
 			return true;
 		} else {
@@ -132,7 +183,16 @@ class TasksController extends AppController {
 			echo $value;
 			die();			
 		}		
-	}	
+	}
+
+	
+	public function removeAssignee($task_id){			
+		if($this->params['isAjax'] && $task_id!=null){								
+			$this->data["Task"]["id"] = $task_id; //set task id
+			$this->data["Task"]["assigned_id"] = 0; //remove assigned user		
+			$this->Task->save($this->data); //save			
+		}		
+	}
 		
 }
 ?>

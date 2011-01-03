@@ -5,9 +5,8 @@ class MilestonesController extends AppController {
 	var $helpers = array ('Time','Html','Form','Ajax','Javascript');
 	
 	function index() {					
-		$milestone = $this->Milestone->find('all', array(
-			"recursive" => 2,
-			"contain" => array("Task.User")));
+		$this->helpers[] = 'Time';		
+		$milestone = $this->Milestone->find('all', array("recursive"=>2, "contain"=>array("Task.Assigned.username")));
 		$this->set('milestones', $milestone);
 	}
 		

@@ -37,7 +37,7 @@ $right = $right==0 ? "" : $this->Html->link('All Milestones', array('controller'
 							); 	
 							}else{
 								?>
-								Assigned to <?php echo $task["User"]['username'] ?>
+								Assigned to <?php echo $task["Assigned"]['username'] ?>
 								<?php
 							} 	
 						?>												

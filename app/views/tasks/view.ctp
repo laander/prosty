@@ -21,8 +21,8 @@ Description:<div class="edit" id="desc_<?php echo $task['Task']['id']; ?>"><?php
 $options['submitdata'] = array('id'=> $task['Task']['id'], 'field'=>'description');
 echo $ajax->editor("desc_".$task['Task']['id'], array(),$options);
 ?>
-<input type="hidden" id="foreign_key" value="<?=$task['Task']['id']?>"/>
-				
+
+<input type="hidden" id="foreign_key" value="<?=$task['Task']['id']?>"/>			
 <div id="costBenefit" class="ajaxUpdate">	
 	<div class="slideContainer">
 		<p class="header">Importance of feature</p>
@@ -44,6 +44,28 @@ echo $ajax->editor("desc_".$task['Task']['id'], array(),$options);
 	</div>
 	<p id="humanScore"></p>
 </div>
+<?php echo $form->create( 'Task' ); ?>
 
+Assign task to:
+<?php
+	$selected = $task['Task']['assigned_id'];
+	$options = array();
+	foreach($task["Milestone"]["Project"]["UserProject"] as $id=>$user){	
+		$id = $user["user_id"];
+		$options[$id] = $user["User"]["username"];		
+	}
+	echo $form->select('assigned', array($options), $selected); 
+?>
+</form>
+
+<?php 
+echo $ajax->observeForm( 'TaskViewForm', 
+    array(
+        'url' => array( 'action' => 'setAssignee', $task['Task']['id']),
+		'complete' =>	'eval(request.responseText)'
+        
+    ) 
+); 
+?>
 <?php //echo $this->requestAction(array('plugin'=>'comments', 'controller' => 'comments', 'action' => "index"), array('return')); ?>
 <?php echo $this->requestAction("/comments/comments/index/Task/".$task['Task']['id'], array('return')); ?>

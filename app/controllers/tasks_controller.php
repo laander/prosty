@@ -3,12 +3,7 @@ class TasksController extends AppController {
 	var $name = 'Tasks';
 	var $components = array('Session', 'RequestHandler');
 	var $helpers = array ('Html','Form','Ajax','Javascript');
-	var $belongsTo = array(    
-		'Assigned' => array(
-			'className' => 'User',
-			'foreignKey' => 'assigned_id'
-			)		
-		);
+
 	
 	//var $scaffold;
 	
@@ -16,12 +11,14 @@ class TasksController extends AppController {
 				$task = $this->Task->find('first',array(
 					'conditions' => array('Task.id' => $id),
 					'recursive' => 4,
-					'contain' => array('Milestone.Project.UserProject.User.username')
+					'contain' => array('Milestone.Project.User.username')
 					
-				));				
+				));	
 				$this->set('task', $task);
 	}	
 		
+
+/*
 	function add() {
 		if (!empty($this->data)) {														
 			if ($this->Task->save($this->data)) {
@@ -37,6 +34,8 @@ class TasksController extends AppController {
 			$this->set(compact('milestones', 'users'));		
 		}
 	}
+
+*/
 
 	function edit($id = null) {
 		if (!$id && empty($this->data)) {
@@ -97,20 +96,12 @@ class TasksController extends AppController {
 		}
 	}	
 
-<<<<<<< HEAD
-	function setAssignee($task_id=null) {			
-=======
 	// Set current user as assigned, called using ajax
-	function ajaxSetAsAssigned($task_id = null) {
-		//set id
-		$this->data["Task"]["id"] = $task_id;
->>>>>>> laander/master
-				
+	function ajaxSetAsAssigned($task_id = null) {			
 		if($this->params['isAjax']){
 			//set id
 			$this->data["Task"]["id"] = $task_id;		
 
-<<<<<<< HEAD
 			//if no assigned_id is supplied, assign to current user
 			 
 			if(!$this->data["Task"]["assigned"]){
@@ -139,6 +130,9 @@ class TasksController extends AppController {
 	}
 	
 	function add($milestone_id = null) {
+
+
+/*
 		//data has been posted
 		if (!empty($this->data)) {														
 			if ($this->Task->save($this->data)) {
@@ -150,7 +144,10 @@ class TasksController extends AppController {
 		//no data has been posted yet	
 		}else{
 			$this->set("milestone_id", $milestone_id);
-=======
+
+*/
+
+
 		//save
 		if($this->Task->save($this->data)) {
 			$this->Session->setFlash(__('You have been assigned the task', true));
@@ -158,8 +155,8 @@ class TasksController extends AppController {
 		} else {
 			$this->Session->setFlash(__("Couldn't assign you the task", true));		
 			die("0");
->>>>>>> laander/master
 		}
+
 /*		if ($this->params['isAjax']) {
 			return true;
 		} else {

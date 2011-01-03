@@ -1,6 +1,6 @@
 <?php
 class Task extends AppModel {
-    var $name = 'Task';    
+   	var $name = 'Task';    
 	var $actsAs = array('Containable');            
     
     var $belongsTo = array(

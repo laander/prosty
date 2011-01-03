@@ -4,8 +4,8 @@
 <?php echo $this->Javascript->link("/js/jquery.jeditable.mini.js", false); ?>
 
 <div class="tasks view">
+<? /* ?> 	 
 <h2><?php  __('Task');?></h2>
-
 Title:
 <div class="edit" id="title_<?php echo $task['Task']['id']; ?>"><?php echo $task['Task']['title']; ?></div>
 <?php
@@ -23,7 +23,7 @@ echo $ajax->editor("desc_".$task['Task']['id'], array(),$options);
 
 <input type="hidden" id="foreign_key" value="<?=$task['Task']['id']?>"/>			
 
-<? /* ?>
+
 <div id="costBenefit" class="ajaxUpdate">	
 	<div class="slideContainer">
 		<p class="header">Importance of feature</p>
@@ -84,20 +84,17 @@ echo $ajax->editor("desc_".$task['Task']['id'], array(),$options);
 				</div>
 			</div>
 			<div class="clearfix"></div>
-		</div>
-	</div>
-</div>
 
-
+			<div>
 <?php echo $form->create( 'Task' ); ?>
-
 Assign task to:
 <?php
 	$selected = $task['Task']['assigned_id'];
 	$options = array();
-	foreach($task["Milestone"]["Project"]["UserProject"] as $id=>$user){	
-		$id = $user["user_id"];
-		$options[$id] = $user["User"]["username"];		
+	foreach($task["Milestone"]["Project"]["User"] as $id=>$user){	
+
+		$id = $user["UserProject"]["user_id"];
+		$options[$id] = $user["username"];		
 	}
 	echo $form->select('assigned', array($options), $selected); 
 ?>
@@ -111,6 +108,12 @@ echo $ajax->observeForm( 'TaskViewForm',
     ) 
 ); 
 ?>
+
+			</div>
+
+		</div>
+	</div>
+</div>
 
 <div class="box-half">
 	<p class="box-title">Comments</p>

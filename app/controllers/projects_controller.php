@@ -108,7 +108,7 @@ class ProjectsController extends AppController {
 			array(
 				"recursive" => 2,
 				"conditions" => array("Milestone.deadline >=" => ".NOW()." ), 
-				"contain" => array("Task.User")
+				"contain" => array("Task.Assigned")
 		));
 		
 		// Set view variables

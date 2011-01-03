@@ -79,7 +79,7 @@ class TasksController extends AppController {
 		$this->data["Task"]["id"] = $task_id;
 		
 		//get current status
-		$old_status = $this->Task->findAllById($task_id, array('fields'=>'Task.status'));
+		$old_status = $this->Task->findById($task_id, array('fields'=>'Task.status'));
 		$old_status = $old_status["Task"]["status"];
 		
 		//toggle status

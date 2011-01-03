@@ -51,10 +51,10 @@
 								<div class="actions">							
 									<?php							
 										if ($task['assigned_id'] == 0) {
-										echo $html->link(
-											$html->image('basic-icons/plus_16.png', array('alt' => 'Change status')),
-											array('controller' => 'tasks', 'action' => 'ajaxSetAsAssigned', $task['id']), 
-											array('class' => "task-assigned", 'escape' => false));										
+											echo $html->link(
+												$html->image('basic-icons/plus_16.png', array('alt' => 'Become responsible')),
+												array('controller' => 'tasks', 'action' => 'ajaxSetAsAssigned', $task['id']), 
+												array('class' => "task-assigned", 'escape' => false));										
 										} else {
 											echo $this->element('users_profilelink', array('user' => $task["Assigned"]));
 										} 	

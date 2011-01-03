@@ -3,7 +3,6 @@
 <?php echo $this->Javascript->link("/js/jquery.colorbox-min.js", false); ?>
 <?php echo $this->Javascript->link("/js/jquery.jeditable.mini.js", false); ?>
 
-<div class="tasks view">
 <? /* ?> 	 
 <h2><?php  __('Task');?></h2>
 Title:
@@ -83,34 +82,28 @@ echo $ajax->editor("desc_".$task['Task']['id'], array(),$options);
 					</div>
 				</div>
 			</div>
-			<div class="clearfix"></div>
 
-			<div>
-<?php echo $form->create( 'Task' ); ?>
-Assign task to:
-<?php
-	$selected = $task['Task']['assigned_id'];
-	$options = array();
-	foreach($task["Milestone"]["Project"]["User"] as $id=>$user){	
-
-		$id = $user["UserProject"]["user_id"];
-		$options[$id] = $user["username"];		
-	}
-	echo $form->select('assigned', array($options), $selected); 
-?>
-<?php echo $form->end(); ?>
-
-<?php 
-echo $ajax->observeForm( 'TaskViewForm', 
-    array(
-        'url' => array( 'action' => 'setAssignee', $task['Task']['id']),
-		'complete' =>	'eval(request.responseText)'        
-    ) 
-); 
-?>
-
+			<div class="field select">			
+				<span class="label">Assign task to:</span>			
+				<?php
+					echo $form->create( 'Task' );
+					$selected = $task['Task']['assigned_id'];
+					$options = array();
+					foreach($task["Milestone"]["Project"]["User"] as $id=>$user){					
+						$id = $user["UserProject"]["user_id"];
+						$options[$id] = $user["username"];		
+					}
+					echo $form->select('assigned', array($options), $selected, array('empty' => false)); 
+					echo $form->end();
+					echo $ajax->observeForm('TaskViewForm', 
+					    array(
+					        'url' => array( 'action' => 'ajaxSetAsAssigned', $task['Task']['id']),
+							'complete' =>	'updateFlashMessage();'        
+				    	)); 
+				?>
 			</div>
 
+			<div class="clearfix"></div>
 		</div>
 	</div>
 </div>

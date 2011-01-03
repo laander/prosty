@@ -122,35 +122,19 @@ class ProjectsController extends AppController {
 	// Used for inline editing, called using ajax
 	function ajaxJEdit() {			
 		if($this->params['isAjax']){
-						
+			// get milestone id and field + value to save			
 			$id = $this->params['form']['id'];
 			$field = $this->params['form']['field'];
 			$value = $this->params['form']['value'];			
-			
-
-			//only milestone with deadline in the future
-			$conditions = array("Milestone.deadline >=" => ".NOW()." );			
-			$milestone = $this->Milestone->find('first', array('conditions'=>$conditions, "recursive"=>2, "contain"=>array("Task.Assigned.username")));							
-			$this->set(compact('project','milestone','clients','consultants'));
-		}		
-
-
-	
-/*
-
-//Git merge conflict - commented out due to unknown solution
-
-
+			// set save data
 			$this->data["Project"]["id"] = $id;
         	$this->data["Project"][$field] = $value;
-        	
 			if ($this->Project->save($this->data) && $this->Project->hasField($field)) {
 				$this->Session->setFlash('The project was updated!');
 			}
 			echo $value;
 			die();			
-		}		
-*/
+		}
 	}
 	
 	// Creates a flash message if supplied and echos the flash message again

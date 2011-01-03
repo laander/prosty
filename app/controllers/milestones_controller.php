@@ -5,9 +5,10 @@ class MilestonesController extends AppController {
 	var $helpers = array ('Time','Html','Form','Ajax','Javascript');
 	
 	function index() {					
-		$this->helpers[] = 'Time';		
-		$milestone = $this->Milestone->find('all', array("recursive"=>2, "contain"=>array("Task.Assigned.username")));
-		$this->set('milestones', $milestone);
+		$milestones = $this->Milestone->find('all', array(
+			"recursive" => 2,
+			"contain" => array("Task.Assigned")));
+		$this->set('milestones', $milestones);
 	}
 		
 	function add() {	
@@ -16,7 +17,6 @@ class MilestonesController extends AppController {
 			if (!isset($this->data['Milestone']['project_id'])) {
 				$this->data['Milestone']['project_id'] = $this->currentProject('id');
 			}		
-			//$this->data["Milestone"]["project_id"] = $this->Session->read('Project.id');			
 			if ($this->Milestone->save($this->data)) {
 				$this->Session->setFlash(__('The milestone has been saved', true));
 				$this->redirect(array('action' => 'index'));

@@ -1,0 +1,17 @@
+Prosty is Konscript's inhouse project management system, currently under development.
+Current version: 0.2.1 alpha
+
+*Contributors:*
+Søren Louv-Jansen and Lasse Boisen Andersen perform as both core developers and coordinators.
+
+*Setup:*
+Built on the CakePHP framework with heavy use of AJAX (jQuery) for visual gimmicks.
+
+*Requirements:*
+Preferably PHP5 and MySQL on an Apache server with mod_rewrite enabled (more on http://book.cakephp.org/view/28/Requirements).
+
+*Installation:*
+1. Download/fork/fetch the full repository from GitHub
+2. Create a MySQL database from scheme: app/config/schema/prosty.sql
+3. Change configuration settings in app/config/database.php and app/config/core.php (if needed)
+4. Login with the predifined admin user (secret for now ;))

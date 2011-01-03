@@ -1,7 +1,6 @@
 <?php
 class UserProject extends AppModel {
 	var $name = 'UserProject';
-	var $displayField = 'id';
 
 	var $belongsTo = array(
 		'User' => array(

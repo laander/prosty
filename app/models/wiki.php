@@ -7,35 +7,22 @@ class Wiki extends AppModel {
     		'className' => 'Wiki',
     		'foreignKey' => 'parent_id'
     	)    	
-    );  
-
-	function beforeFind($queryData){	
-			
-		/*** filter by project_id ***/
-		if ($this->hasField('project_id')) {
-			$queryData['conditions']['Wiki.project_id']  = $_SESSION["Project"]["id"];
-		}
-		return $queryData;
-	}    	    
+    );
     
     function beforeSave() {
-
-    	/*** set project_id ***/
-    	//If field "project_id" exists
-    	if ($this->hasField('project_id')) {
-    		
-    		//get project_id
-			$projectId = $_SESSION["Project"]["id"];
-			if ($projectId) {
-				$this->set(array('project_id' => $projectId));
-			}
-		}
     	
-		/*** set parent_id ***/
-		if ($this->data["Wiki"]["parent_id"]==NULL) {
+		// Set correct parent id if root
+		if ($this->data["Wiki"]["parent_id"] == null) {
     		$this->data["Wiki"]["parent_id"] = 0;
 		}			
 		return true;
+	}
+
+	function beforeFind($queryData){
+		
+		// Only fetch wikis for the project currently being viewed. Use alias for use with Parent model call
+		$queryData['conditions'][$this->alias . '.project_id'] = $this->requestAction('wikis/currentproject/id');
+		return $queryData;
 	}
 }
 ?>

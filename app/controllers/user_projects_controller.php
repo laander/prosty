@@ -1,7 +1,7 @@
 <?php
 class UserProjectsController extends AppController {
-	var $components = array("Session");
 	var $name = 'UserProjects';
+	var $components = array("Session");
 
 	function index() {
 		$this->UserProject->recursive = 0;

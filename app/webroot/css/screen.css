@@ -1,0 +1,429 @@
+@import url("utils.css");
+
+body {
+	margin: 0;
+	font-family: helvetica, arial, sans-serif;
+	font-size: 11px;
+	line-height: 1.5em;
+	background-color: #EDEAE3;
+	background-image: url('../img/bg-texture.png'); }
+
+	a {
+		color: #000; 
+		text-decoration: underline; }
+		
+	#wrapper {
+		width: 100%; }
+		
+		/**
+		 * Sidebar with logo and primary menu 
+		 */
+		
+		#side-container {
+			position: fixed;
+			top: 0;
+			left: 0;
+			height: 100%;
+			width: 180px;
+			background-color: #000;
+			background-image: url('../img/side-texture.png');
+			color: #fff; }
+		
+			#header {
+				position: relative;
+				margin: 20px auto 0 auto;
+				width: 70px;
+				height: 130px;
+				text-align: center; }
+				
+				#header a {
+					text-decoration: none; }
+				
+				#header a img {
+					position: absolute;
+					top: 20px; }
+					
+				#header a span {
+					position: absolute;
+					top: 25px;
+					font-size: 18px;
+					color: #fff;
+					font-weight: normal;
+					filter:alpha(opacity=0);
+					-moz-opacity:0;
+					-khtml-opacity: 0;
+					opacity: 0; }
+			
+			#main-menu {
+				margin: 0 30px; }
+				
+				ul.menu-toplevel {
+					margin: 0;
+					padding: 0;
+					list-style: none; }
+					
+					ul.menu-toplevel > li {
+						padding: 15px 0 20px 0;
+						border-top: 1px solid #252525;
+						text-align: left;
+						filter:alpha(opacity=70);
+						 -moz-opacity:0.7;
+						 -khtml-opacity: 0.7;
+						 opacity: 0.7; }
+						 
+					ul.menu-toplevel > li.current-toplevel,
+					ul.menu-toplevel > li:hover {
+						filter:alpha(opacity=100);
+						-moz-opacity: 1;
+						-khtml-opacity: 1;
+						opacity: 1; }
+					
+						ul.menu-toplevel > li > a {
+							text-decoration: none; }
+						
+							ul.menu-toplevel > li > a > img {
+								width: 25px; 
+								margin-bottom: -7px; }
+								
+							ul.menu-toplevel > li > a > span {
+								margin-left: 5px;
+								font-size: 13px;
+								font-weight: normal;
+								color: #fff; }
+					
+					ul.menu-sublevel {
+						margin: 20px 0 0 0;
+						padding: 0 10px;
+						list-style: disc; }
+					
+							ul.menu-sublevel > li {
+								padding: 0 0 0 9px;
+								margin: 3px 0 0 14px; 
+								filter:alpha(opacity=70);
+								-moz-opacity:0.7;
+								-khtml-opacity: 0.7;
+								opacity: 0.7; }
+							
+							ul.menu-sublevel > li.current-sublevel,
+							ul.menu-sublevel > li:hover {
+								filter:alpha(opacity=100);
+								-moz-opacity: 1;
+								-khtml-opacity: 1;
+								opacity: 1; }
+	
+								ul.menu-sublevel > li > a {
+									text-decoration: none;
+									color: #fff; }
+			
+			#subheader {
+				display: none;
+				margin: 0 30px;
+				padding: 20px 0;
+				border-top: 1px solid #252525; }
+		
+		/**
+		 * Main content area 
+		 */
+		
+		#main-container {
+			min-width: 780px;		
+			margin-left: 180px;
+			padding: 20px;
+			border-left: 1px solid #fff; }
+		
+			#sub-menu {
+				height: 50px;
+				border-bottom: 1px dotted #BEBBB6;
+				margin-bottom: 10px; }
+				
+				.project-selector {
+					float: right; }
+					
+					.project-selector > form,
+					.project-selector > span {
+						float: right;
+						display: inline; }
+
+					.project-selector > span {
+						margin: 7px 10px 0 0; }
+		
+			#page-title h1 {
+				margin: 15px 0; }
+		
+			#content {	
+				display: block; }
+			#content:after {
+				content: ".";
+				display: block;
+				height: 0;
+				clear: both;
+				visibility: hidden; }
+				
+				#primary-area {
+					float: left;
+					width: 100%;
+					margin-right: -190px; }
+					
+					#primary-area-inner {
+						width: auto;
+						margin-right: 190px; }
+
+				#secondary-area {
+					float: right;
+					width: 180px;
+					padding-top: 25px; }
+					
+					.flash-message {
+						display: block;
+						background-color: #a8d9a3;
+						cursor: pointer;
+						-moz-border-radius: 4px;
+						-webkit-border-radius: 4px; }
+						
+						.flash-message > * {
+							display: block;
+							padding: 10px; }
+					
+					.flash-message-seperator {
+						display: none;
+						height: 10px; }					
+
+				#tertiary-area {
+					float: left;
+					width: 100%;
+					clear: both;
+					border-top: 1px dotted #BEBBB6;
+					margin-top: 20px;
+					padding-top: 20px; }		
+
+/**
+ * Default styling for HTML elements
+ */		
+ 
+/* Debug */
+
+pre.cake-debug {
+	margin-left: 200px; }
+		
+/* Tables */
+
+table {
+	width: 100%;
+	margin: 10px 0; }
+
+	table tr:hover {
+		background-color: #EDEAE3; }
+
+		table tr th {
+			padding: 6px;
+			font-weight: bold;
+			border-bottom: 2px solid #BEBBB6; }
+			
+		table tr td {
+			padding: 6px;
+			border-bottom: 1px solid #BEBBB6; }
+		
+/* Forms */
+
+form label {
+	display: block;
+	font-weight: bold; }
+
+form input,		
+form textarea,
+form select {
+	margin: 5px 10px 10px 0; }			
+
+form .checkbox label {
+	display: inline;
+	font-weight: normal; }
+		
+form input,
+form textarea {		
+	border: 1px solid #BEBBB6;
+	padding: 6px; }
+	
+.tinymce-wrapper {
+	margin-bottom: 10px;
+}
+
+.tinymce-editor {
+	width: 95%;
+	height: 400px; }	
+			
+.jeditable {
+	cursor: crosshair; }
+	
+	.jedit-cancel {
+		font-size: 11px;
+		display: block;
+		padding: 6px 0 0 0;
+		cursor: pointer; }
+		
+	.jedit-cancel:hover {
+		text-decoration: underline; }
+
+	.inline-edit {
+		margin: 5px 0;
+		clear: both; }
+
+	.inline-edit:after {
+		content: ".";
+		display: block;
+		height: 0;
+		clear: both;
+		visibility: hidden; }
+				
+		.inline-edit * {
+			float: left;
+			margin: 0px 0 10px 0; }
+						
+/* Views */
+
+.view .field {
+	margin: 0 0 10px 0; }
+		
+.view .field .label {
+	display: block;
+	font-weight: bold; }
+		
+/**
+ * Context styling for specific pages/sections
+ */
+
+/* Project Details */ 
+.context-project-details .box-content h2 {
+	font-size: 21px;
+	margin: 10px 0 20px 0; }
+	
+.context-project-details .box-content .project-logo {
+	float: right;
+	max-width: 42%; }
+
+/* Tasks Quick Add modal form */	
+#context-tasks-quickadd form .submit {
+	position: relative;
+	display: block; 
+	height: 26px; }	
+
+/* Tasks Table */	
+table.context-table-tasks {
+	width: 100%;
+	margin: 10px 0;
+	border-top: 1px solid #BEBBB6; }
+		
+		table.context-table-tasks tr td a.title {
+			text-decoration: none; }
+			
+		table.context-table-tasks tr td .actions {
+			float: right; 
+			margin-left: 5px; }
+			
+		table.context-table-tasks tr td .task-costbenefit-icon {
+			display: block;
+			float: left;
+			height: 12px;
+			width: 12px;
+			margin: 1px 5px 0 0;
+			background-color: #000;
+			text-indent: -99999px;
+			-moz-border-radius: 6px;
+			-webkit-border-radius: 6px; }	
+
+			table.context-table-tasks tr td .actions img { 
+				margin-left: 5px;
+				line-height: 0;
+				vertical-align: bottom; 
+				cursor: pointer;
+				filter:alpha(opacity=40);
+				-moz-opacity: 0.4;
+				-khtml-opacity: 0.4;
+				opacity: 0.4; }
+
+			table.context-table-tasks tr td .actions span { 
+				margin-left: 5px; }
+
+		table.context-table-tasks tr td.task-complete a.title {
+			color: #5d8256; }
+			
+			table.context-table-tasks tr td.task-complete a.task-status img {
+				filter:alpha(opacity=100);
+				-moz-opacity: 1;
+				-khtml-opacity: 1;
+				opacity: 1; }
+
+/* Tasks Cost-Benefit analyzer */
+#context-tasks-costbenefit {
+	position: relative;
+	margin: 10px 0; }
+
+#context-tasks-costbenefit:after {
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden; }
+
+	#context-tasks-costbenefit .slide-wrapper {
+		float: left; }
+		
+		/*two main containers for each of the sliders and their text labels*/
+		#context-tasks-costbenefit .slide-container{	
+			position: relative;
+			float: left;
+			clear: left;
+			width: 250px;
+			margin: 0 0 10px 0; }
+		
+			#context-tasks-costbenefit p.header{
+				position: relative;
+				clear: both;		
+				font-weight: bold;
+				text-align: center; }
+						
+			/* the slider */
+			#context-tasks-costbenefit .slider {
+				float: left;
+				clear: both;
+				padding: 0px;
+				width: 100%;
+				margin: 5px 0 5px 0; }	
+	
+			/*Text labels next to sliders*/
+			#context-tasks-costbenefit .slide-tag{
+				position: relative; }
+				
+			#context-tasks-costbenefit .slide-tag.left{
+				float: left;
+				text-align: left; }
+				
+			#context-tasks-costbenefit .slide-tag.right{
+				float: right;
+				text-align: right; }
+		
+		#context-tasks-costbenefit .verdict {
+			display: block;
+			float: left;
+			clear: both;
+			margin-bottom: 10px; }
+			
+			#context-tasks-costbenefit .task-costbenefit-icon {
+				display: block;
+				float: left;
+				height: 24px;
+				width: 24px;
+				margin: 1px 10px 0 0;
+				background-color: #000;
+				text-indent: -99999px;
+				-moz-border-radius: 12px;
+				-webkit-border-radius: 12px; }	
+		
+			#context-tasks-costbenefit #human-verdict {
+				display: block; 
+				float: left;
+				margin-top: 5px; }	
+		
+		#context-tasks-costbenefit .callback {
+			position:absolute;
+			left: 0;
+			top: 15; }		

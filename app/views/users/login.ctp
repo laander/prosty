@@ -1,7 +1,13 @@
-<?php
-    echo $session->flash('auth');
-    echo $form->create('User', array('action' => 'login'));
-    echo $form->input('username');
-    echo $form->input('password');
-    echo $form->end('Login');
-?>
+<div class="box-full">
+	<p class="box-title">Login</p>
+	<div class="box-content">
+		<?php
+		    echo $session->flash('auth');
+		    echo $form->create('User', array('action' => 'login'));
+		    echo $form->input('username');
+		    echo $form->input('password');
+		    echo $form->end('Login');
+		?>
+		<div class="clearfix"></div>									
+	</div>
+</div>

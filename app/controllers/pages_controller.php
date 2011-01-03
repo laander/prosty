@@ -5,6 +5,7 @@ class PagesController extends AppController {
 	var $components = array("Session");
 	var $helpers = array('Html', 'Session');
 	var $uses = array();
+	
 	function display() {
 		$this->Session->setFlash(__('The task has been saved', true));
 		$path = func_get_args();

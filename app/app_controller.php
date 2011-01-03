@@ -36,9 +36,9 @@ class AppController extends Controller {
 			}
 		}
 		
-		// Get a list of all projects and set list array for select element (dropdown)
+		// Get a list of all projects and set list array for project selector element (dropdown)
 		$this->loadModel('Project');
-		$this->set('projects', $this->Project->find('list'));
+		$this->set('projectsSelector', $this->Project->find('list'));
 	}
 
 	// Will return current user or false if not available.

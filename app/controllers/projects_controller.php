@@ -85,6 +85,10 @@ class ProjectsController extends AppController {
 		
 		// Get current project data
 		$currentProjectId = $this->currentProject('id');
+		if ($currentProjectId == false) {
+			$this->Session->setFlash(__('Choose a project!', true));
+			$this->redirect(array('action' => 'index'));
+		}
 		$project = $this->Project->find("first", array(
 			"recursive" => 2,
 			"conditions" => array("Project.id" => $currentProjectId),

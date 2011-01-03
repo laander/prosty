@@ -106,8 +106,8 @@
 						array('controller' => 'wikis', 'action' => 'index'), 
 						array('class' => 'button ' . $this->element('submenu_classer', array('test' => 'wikis')))); ?>
 					<div class="project-selector">
-						<?php echo $this->Form->create('Project'); ?>
-						<?php echo $this->Form->input('Project', array('label'=>'','type'=>'select', 'selected' => $currentProjectId));?>
+						<?php echo $this->Form->create('projectSelector', array('url' => array('controller' => 'projects', 'action' => 'view'))); ?>
+						<?php echo $this->Form->select('id', $projectsSelector, $currentProjectId, array('empty' => false));?>
 						<?php echo $this->Form->end(); ?>
 						<span>Current Project:</span>
 					</div>

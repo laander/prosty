@@ -89,11 +89,12 @@ echo $ajax->editor("desc_".$task['Task']['id'], array(),$options);
 					echo $form->create( 'Task' );
 					$selected = $task['Task']['assigned_id'];
 					$options = array();
+					$options[0] = "-"; //remove assigned user
 					foreach($task["Milestone"]["Project"]["User"] as $id=>$user){					
 						$id = $user["UserProject"]["user_id"];
 						$options[$id] = $user["username"];		
 					}
-					echo $form->select('assigned', array($options), $selected, array('empty' => '-')); 
+					echo $form->select('assigned', array($options), $selected, array('empty' => false)); 
 					echo $form->end();
 					echo $ajax->observeForm('TaskViewForm', 
 					    array(

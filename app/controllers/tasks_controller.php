@@ -90,23 +90,30 @@ class TasksController extends AppController {
 
 	// Set current user as assigned, called using ajax
 	function ajaxSetAsAssigned($task_id = null) {			
-		if($this->params['isAjax']){
+		if($this->params['isAjax']){						
 		
 			//set id
 			$this->data["Task"]["id"] = $task_id;		
 
-			//if no assigned_id is supplied, assign to current user
-			if (!$this->data["Task"]["assigned"]) {
-				//set assigned_id to user_id
+			//if no assigned_id is supplied, assign to current user. Otherwise the supplied assigned_id will be used
+			if (!isset($this->data["Task"]["assigned"])) {				
+				//set assigned_id to current user_id
 				$this->data["Task"]["assigned_id"] = $this->currentUser('id');
 			} else {
 				$this->data["Task"]["assigned_id"] = $this->data["Task"]["assigned"];
-			}
+			}			
 			
 			//save
 			if($this->Task->save($this->data)) {
-				$this->Session->setFlash(__('User has been assigned the task', true));
-				die("1");
+				
+				if($this->data["Task"]["assigned"]>0){
+					$this->Session->setFlash(__('User has been assigned the task', true));
+					die("1");
+				}else{
+					$this->Session->setFlash(__('User was removed from the task', true));
+					die("2");
+				}				
+				
 			} else {
 				$this->Session->setFlash(__("Couldn't assign user the task", true));		
 				die("0");

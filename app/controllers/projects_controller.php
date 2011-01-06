@@ -92,7 +92,7 @@ class ProjectsController extends AppController {
 	
 	function dashboard() {	
 				
-	/***************** NOTIFICATIONS *******************************/	
+	/***************** RECENT ENTRIES AND NOTIFICATIONS *******************************/	
 		//get last login - this is only set once per session
 		$last_login = $this->Session->read('User.last_login'); 
 		
@@ -110,30 +110,38 @@ class ProjectsController extends AppController {
 		
 		//models to retrieve notifications for
 		$models = array("Milestone", "Task", "Wiki");
-		$notifications = array();
+		$recent_entries = array();
         foreach($models as $model){
 			$this->loadModel($model);
 			
 			//get modified rows
-			$modified = $this->$model->find('all', array(
-					'conditions'=>array($model.'.modified >' => $last_login),
+			$modified = $this->$model->find('all', array(			
+					'conditions'=>array($model.'.modified_by <>' => $this->currentUser('id')),		
 					'limit'=>10			
 				)			
 			);		
 
 			foreach($modified as $i=>$data){								
-				$modified[$i]["state"] = $data[$model]["created"]==$data[$model]["modified"] ? "created" : "modified"; //determine if the entry was created or just modified							
+				$modified[$i]["state"] = $data[$model]["created"]==$data[$model]["modified"] ? "created" : "modified"; //determine if the entry was created or just modified
 				$modified[$i]["date"] = $this->convert_datetime($data[$model]["modified"]); //add date field
+				
+				if($data[$model]["modified"] > $last_login && $modified[$i]["date"]>$this->Session->read('Notification.'.$model.$data[$model]["id"])){
+					$modified[$i]["notification"] = true;					
+				}else{
+					$modified[$i]["notification"] = false;	
+				}
+												
 				$modified[$i]["model"] = $model; //add model field			
-				$notifications[] = $modified[$i]; //add entire entry to notifications array
+				$recent_entries[] = $modified[$i]; //add entry to recent_entries array
 			}			
         }				
         
-        //sort notifications by date
+        //sort entries by date
         function sortByDate($b, $a) {
 		    return $a['date'] - $b['date'];
 		}		
-		usort($notifications, 'sortByDate');
+		usort($recent_entries, 'sortByDate');
+		$recent_entries = array_slice($recent_entries, 0, 20); //limit to 20 entries
 		       
 		
         /***************** PROJECT INFO*******************************/
@@ -171,7 +179,7 @@ class ProjectsController extends AppController {
 		));
 		
 		// Set view variables
-		$this->set(compact('project','milestone','clients','consultants', 'notifications'));
+		$this->set(compact('project','milestone','clients','consultants', 'recent_entries', 'last_login'));
 	}
 	
 	// Used for inline editing, called using ajax

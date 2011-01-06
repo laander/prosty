@@ -200,6 +200,11 @@ body {
  * Default styling for HTML elements
  */		
  
+/** general tags **/
+h3 {
+	font-size:14px;	
+}
+ 
 /* Debug */
 
 pre.cake-debug {
@@ -222,6 +227,9 @@ table {
 		table tr td {
 			padding: 6px;
 			border-bottom: 1px solid #BEBBB6; }
+			
+		table tr td a {
+			text-decoration:none; }			
 		
 /* Forms */
 
@@ -353,6 +361,11 @@ table.context-table-tasks {
 				-moz-opacity: 1;
 				-khtml-opacity: 1;
 				opacity: 1; }
+				
+/* Recent entries on dashbard */
+table.context-table-recent-entries td.newEntry {
+	background-color: #EDEAE3;
+}
 
 /* Tasks Cost-Benefit analyzer */
 #context-tasks-costbenefit {

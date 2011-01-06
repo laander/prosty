@@ -1,6 +1,5 @@
 // when DOM is ready
-jQuery(document).ready(function($) {
-	$.localScroll.hash({reset: true});
+jQuery(document).ready(function($) {	
 	hideFlashMessage();	
 	colorizeCostBenefit();
 	projectSelector();

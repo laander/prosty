@@ -56,19 +56,34 @@
 	<p class="box-title">Notifications</p>
 												
 	<div class="box-content">
-		<div class="projects view">
-			<?php foreach($notifications as $notification){	
-				$state = $notification["state"];
-				$model = $notification["model"];
-				$username = $notification["ModifiedBy"]["username"];
-				$id = $notification[$model]["id"];
-				$title = $notification[$model]["title"];
-				$controller = strToLower($model)."s";
-				$anchorText = $username." ".$state." the ".strToLower($model)." '".$title."'";
-				echo $this->Html->Link($anchorText, array('controller'=>$controller, 'action'=>'view', $id))."<br>";				
-			}
-			?>
-			<?php //debug($notifications);?>
+		<div class="projects view">		
+				<div class="field text">
+					Changes since your last login <span><?php echo $last_login; ?></span>
+				</div>		
+				<table class="context-table-recent-entries">				
+					<?php foreach($recent_entries as $recent_entry): 
+						$state = $recent_entry["state"];
+						$notification = $recent_entry["notification"]; 
+						$model = $recent_entry["model"];
+						$username = $recent_entry["ModifiedBy"]["username"];
+						$id = $recent_entry[$model]["id"];
+						$title = $recent_entry[$model]["title"];
+						$controller = strToLower($model)."s";
+						$anchorText = $username." ".$state." the ".strToLower($model)." '".$title."'";
+					?>
+						<tr>
+							<?php if($notification): ?>
+							<td class="newEntry">					
+								<?php echo $this->Html->Link($anchorText, array('controller'=>$controller, 'action'=>'view', $id, 'recent')); ?>																					
+							</td>
+							<?php else: ?>
+							<td>					
+								<?php echo $this->Html->Link($anchorText, array('controller'=>$controller, 'action'=>'view', $id)); ?>																					
+							</td>														
+							<?php endif; ?>
+						</tr>						
+					<?php endforeach; ?>						
+				</table>
 		</div>
 		<div class="clearfix"></div>									
 	</div>

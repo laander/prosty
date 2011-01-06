@@ -2,6 +2,13 @@
 <?php echo $this->Javascript->link("jquery.jeditable.mini.js", false); ?>
 <?php echo $this->Javascript->link("jquery.scrollTo-1.4.2-min.js", false); ?>
 <?php echo $this->Javascript->link("jquery.localscroll-1.2.7-min.js", false); ?>
+<script type="text/javascript">
+<!--
+jQuery(document).ready(function($) {
+	$.localScroll.hash({reset: true});
+});
+//-->
+</script>
 
 <?php // Creates a compact table with current tasks in the milestone, using handy/nifty ajax buttons ?>
 <?php foreach ($milestones as $milestone): ?>

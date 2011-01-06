@@ -2,13 +2,15 @@
 class AppController extends Controller {
 	var $components = array('Auth','RequestHandler');
 	
-	function beforeRender(){
-		
+	function beforeFilter(){
 		//remove 'newEntry' flag from entry
 		if(in_array("recent", $this->params["pass"])){
 			$entry_id = $this->params["pass"][0];
 			$this->Session->write('Notification.'.ucfirst($this->modelKey).$entry_id, time());
-		}	
+		}
+	}
+	
+	function beforeRender(){	
 		
 		// will supply the HTML sites base url to the layout so it can set the HTML <base /> for ajax
 		// http://' . $_SERVER['SERVER_NAME']. ':' . $_SERVER['SERVER_PORT']

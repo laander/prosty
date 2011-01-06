@@ -232,6 +232,7 @@ form label {
 form input,		
 form textarea,
 form select {
+	font-family:inherit;
 	margin: 5px 10px 10px 0; }			
 
 form .checkbox label {

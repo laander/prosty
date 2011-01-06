@@ -1,5 +1,6 @@
 // when DOM is ready
 jQuery(document).ready(function($) {
+	$.localScroll.hash({reset: true});
 	hideFlashMessage();	
 	colorizeCostBenefit();
 	projectSelector();
@@ -10,7 +11,6 @@ jQuery(document).ready(function($) {
 	costBenefitSlider();
 	commentPostForm();
 	initTinyMce();
-
 });
 
 // when all images has been loaded
@@ -18,6 +18,7 @@ jQuery(window).load(function($) {
 	showFlashMessage();
 	logoHover();
 });
+
 
 function commentPostForm() {
 	$('form.js-ajax').live('submit', function() {

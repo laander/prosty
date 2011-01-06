@@ -4,6 +4,16 @@ class ProjectsController extends AppController {
 	var $components = array('Session');
 	var $helpers = array ('Time', 'Html','Form','Ajax','Javascript');
 	
+	/*turn a mysql datetime (YYYY-MM-DD HH:MM:SS) into a unix timestamp*/  
+	function convert_datetime($str) { 	
+	    list($date, $time) = explode(' ', $str); 
+	    list($year, $month, $day) = explode('-', $date); 
+	    list($hour, $minute, $second) = explode(':', $time); 
+	     
+	    $timestamp = mktime($hour, $minute, $second, $month, $day, $year); 	     
+	    return $timestamp; 
+	} 	
+	
     var $paginate = array(
 		'Project' => array(
 			'limit' => 20,
@@ -16,8 +26,7 @@ class ProjectsController extends AppController {
 		$this->set('allProjects', $allProjects);
 	}
 			
-	function add() {		
-								
+	function add() {										
 		if (!empty($this->data)) {								
 			$this->Project->create();
 			if ($this->Project->saveAll($this->data)) {
@@ -81,8 +90,53 @@ class ProjectsController extends AppController {
 	}
 
 	
-	function dashboard() {
+	function dashboard() {	
+				
+	/***************** NOTIFICATIONS *******************************/	
+		//get last login - this is only set once per session
+		$last_login = $this->Session->read('User.last_login'); 
 		
+		if(!$last_login){
+			
+			//get last login 
+	        $this->loadModel('User');
+	        $user = $this->User->read('last_login', $this->currentUser('id'));
+	        $last_login = $user["User"]["last_login"];
+	        $this->Session->write('User.last_login', $last_login);
+
+	        //update last login
+			$this->User->saveField('last_login', date(DATE_ATOM));
+		}
+		
+		//models to retrieve notifications for
+		$models = array("Milestone", "Task", "Wiki");
+		$notifications = array();
+        foreach($models as $model){
+			$this->loadModel($model);
+			
+			//get modified rows
+			$modified = $this->$model->find('all', array(
+					'conditions'=>array($model.'.modified >' => $last_login),
+					'limit'=>10			
+				)			
+			);		
+
+			foreach($modified as $i=>$data){								
+				$modified[$i]["state"] = $data[$model]["created"]==$data[$model]["modified"] ? "created" : "modified"; //determine if the entry was created or just modified							
+				$modified[$i]["date"] = $this->convert_datetime($data[$model]["modified"]); //add date field
+				$modified[$i]["model"] = $model; //add model field			
+				$notifications[] = $modified[$i]; //add entire entry to notifications array
+			}			
+        }				
+        
+        //sort notifications by date
+        function sortByDate($b, $a) {
+		    return $a['date'] - $b['date'];
+		}		
+		usort($notifications, 'sortByDate');
+		       
+		
+        /***************** PROJECT INFO*******************************/
 		// Get current project data
 		$currentProjectId = $this->currentProject('id');
 		if ($currentProjectId == false) {
@@ -107,6 +161,7 @@ class ProjectsController extends AppController {
 			}
 		}
 
+		/***************** UPCOMING MILESTONE *******************************/
 		// Get latest milestone for dashboard view
 		$milestone = $this->Project->Milestone->find("first", 
 			array(
@@ -116,7 +171,7 @@ class ProjectsController extends AppController {
 		));
 		
 		// Set view variables
-		$this->set(compact('project','milestone','clients','consultants'));
+		$this->set(compact('project','milestone','clients','consultants', 'notifications'));
 	}
 	
 	// Used for inline editing, called using ajax

@@ -1,5 +1,7 @@
 <?php // Request necessary js logic for inline editing using jEditable ?>
-<?php echo $this->Javascript->link("/js/jquery.jeditable.mini.js", false); ?>
+<?php echo $this->Javascript->link("jquery.jeditable.mini.js", false); ?>
+<?php echo $this->Javascript->link("jquery.scrollTo-1.4.2-min.js", false); ?>
+<?php echo $this->Javascript->link("jquery.localscroll-1.2.7-min.js", false); ?>
 
 <?php // Creates a compact table with current tasks in the milestone, using handy/nifty ajax buttons ?>
 <?php foreach ($milestones as $milestone): ?>
@@ -11,7 +13,7 @@
 			<?php echo $this->Html->link('Edit Milestone', array('controller' => 'milestones', 'action' => 'edit',  $milestone['Milestone']['id'])); ?>
 		<?php endif; ?>
 	</div>	
-	<div class="box-content">
+	<div class="box-content" id="milestone<?php echo $milestone['Milestone']['id'] ?>">
 		<div class="milestones view">
 			<?php if (is_array($milestone)): ?>
 				<div class="field text">

@@ -50,6 +50,30 @@
 	</div>
 </div>
 
+
+<?php // Notifications ?>
+<div class="context-project-details box-half">
+	<p class="box-title">Notifications</p>
+												
+	<div class="box-content">
+		<div class="projects view">
+			<?php foreach($notifications as $notification){	
+				$state = $notification["state"];
+				$model = $notification["model"];
+				$username = $notification["ModifiedBy"]["username"];
+				$id = $notification[$model]["id"];
+				$title = $notification[$model]["title"];
+				$controller = strToLower($model)."s";
+				$anchorText = $username." ".$state." the ".strToLower($model)." '".$title."'";
+				echo $this->Html->Link($anchorText, array('controller'=>$controller, 'action'=>'view', $id))."<br>";				
+			}
+			?>
+			<?php //debug($notifications);?>
+		</div>
+		<div class="clearfix"></div>									
+	</div>
+</div>
+
 <?php // Next milestone ?>
 <?php echo $this->element('milestones_quickindex', array('milestone' => $milestone, 'box_title' => 'Next Milestone')); ?>
 <?php echo $this->element('tasks_quickadd'); ?>

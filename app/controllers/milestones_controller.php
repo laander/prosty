@@ -10,6 +10,10 @@ class MilestonesController extends AppController {
 			"contain" => array("Task.Assigned")));
 		$this->set('milestones', $milestones);
 	}
+	
+	function view($id = null) {
+		$this->redirect(array('action' => 'index','#'=>'milestone'.$id));
+	}
 		
 	function add() {	
 		if (!empty($this->data)) {

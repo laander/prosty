@@ -5,15 +5,17 @@ class UsersController extends AppController {
 		
     function beforeFilter() {
         parent::beforeFilter();
-        $this->Auth->loginRedirect = array('controller' => 'projects', 'action' => 'dashboard');
-        $this->Auth->allow('*');        
+
+		//$this->Auth->loginRedirect = array('controller' => 'projects', 'action' => 'dashboard');
+        //$this->Auth->allow('*');        
     }
-	
-	
-	function login() {
+    
+	function login() {		
+		
 	}
 	
     function logout() {
+    	$this->Session->destroy(); // make sure the session is effectively destroyed on log out - otherwise it will result in irregularities regarding notifications
         $this->redirect($this->Auth->logout());
     }	
 

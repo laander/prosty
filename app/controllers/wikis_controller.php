@@ -20,7 +20,8 @@ class WikisController extends AppController {
 			'fields' => array('Wiki.title','Wiki.id')
 		));		
 		
-		$wiki = $this->Wiki->read(null, $id);		
+		$wiki = $this->Wiki->read(null, $id);
+				
         $this->set(compact('navItems','wiki', 'milestones'));
 	}
 

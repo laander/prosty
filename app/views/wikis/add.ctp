@@ -21,6 +21,10 @@
 					<?php echo $this->Form->input('body', array("class"=>"tinymce-editor")); ?>
 				</div>
 			</fieldset>
+			<?php echo $this->Form->input('public', array(
+					'options'=>array('No', 'Yes')
+				)
+			); ?>
 		<?php echo $this->Form->end(__('Submit', true));?>
 		</div>
 		<div class="clearfix"></div>									

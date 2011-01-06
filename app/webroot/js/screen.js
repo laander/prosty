@@ -1,6 +1,5 @@
 // when DOM is ready
 jQuery(document).ready(function($) {
-
 	hideFlashMessage();	
 	colorizeCostBenefit();
 	projectSelector();
@@ -16,10 +15,8 @@ jQuery(document).ready(function($) {
 
 // when all images has been loaded
 jQuery(window).load(function($) {
-
 	showFlashMessage();
 	logoHover();
-
 });
 
 function commentPostForm() {
@@ -218,7 +215,7 @@ function projectSelector() {
 	// change project selector dropdown
 	$('.project-selector select').change(function() {
 		var project_id = $(this).val();
-		window.location = base() + '/projects/view/' + project_id;
+		window.location = base() + 'projects/view/' + project_id;
 	}); 
 }
 
@@ -267,6 +264,7 @@ function colorizeCostBenefit(selector){
 	});
 }
 
+//Wysiwyg editor
 function initTinyMce() {
 	tinyMCE.init({
         

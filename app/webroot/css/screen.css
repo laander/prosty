@@ -263,7 +263,7 @@ form textarea {
 	.jedit-cancel:hover {
 		text-decoration: underline; }
 
-	.inline-edit {
+	.inline-edit {		
 		margin: 5px 0;
 		clear: both; }
 
@@ -275,6 +275,7 @@ form textarea {
 		visibility: hidden; }
 				
 		.inline-edit * {
+		font-family:inherit;
 			float: left;
 			margin: 0px 0 10px 0; }
 						

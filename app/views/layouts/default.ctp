@@ -76,7 +76,15 @@
 										array('controller' => 'projects', 'action' => 'dashboard')); ?>
 								</li>								
 							</ul>							
-						</li>						
+						</li>
+						<li>
+							<?php $sign_out_image = $this->Html->image("token-icons/Token Light/TokenW-PNG/Multimedia+Graphics/Xion.png"); 
+									 echo $this->Html->link($sign_out_image.'<span>Sign out</span>',
+										array('controller' => 'users', 'action' => 'logout'),
+										array('escape' => false)
+							);
+							?>								
+						</li>												
 					</ul>
 				</div>
 				<div id="subheader">

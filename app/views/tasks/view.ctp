@@ -3,36 +3,6 @@
 <?php echo $this->Javascript->link("/js/jquery.colorbox-min.js", false); ?>
 <?php echo $this->Javascript->link("/js/jquery.jeditable.mini.js", false); ?>
 
-<? /* ?> 	 
-<h2><?php  __('Task');?></h2>
-Title:
-<div class="edit" id="title_<?php echo $task['Task']['id']; ?>"><?php echo $task['Task']['title']; ?></div>
-<?php
-//title specific options
-$options['submitdata'] = array('id'=> $task['Task']['id'], 'field'=>'title');
-echo $ajax->editor("title_".$task['Task']['id'], array(), $options);
-?>
-
-
-Description:<div class="edit" id="desc_<?php echo $task['Task']['id']; ?>"><?php echo $task['Task']['description']; ?></div>
-<?php
-$options['submitdata'] = array('id'=> $task['Task']['id'], 'field'=>'description');
-echo $ajax->editor("desc_".$task['Task']['id'], array(),$options);
-?>
-
-<input type="hidden" id="foreign_key" value="<?=$task['Task']['id']?>"/>			
-
-
-<div id="costBenefit" class="ajaxUpdate">	
-	<div class="slideContainer">
-		<p class="header">Importance of feature</p>
-		<p class="slideTags left">Careless</p>
-		<div class="slider"></div>
-		<p class="slideTags right">Very important</p>
-		<?php echo $this->Form->hidden('priority', array('value'=>$task['Task']['priority']));?>
-		<div id="priorityCallback" class="callback"></div>		
-<? */ ?>
-
 <div class="box-half">
 	<p class="box-title">View Task</p>
 	<div class="box-meta">

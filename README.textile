@@ -1,11 +1,10 @@
+Version: 0.2.1 alpha
+
 Prosty is Konscript's inhouse project management system, currently under development.
-Current version: 0.2.1 alpha
+Built on the CakePHP framework with heavy use of AJAX (jQuery) for visual gimmicks.
 
 *Contributors:*
 Søren Louv-Jansen and Lasse Boisen Andersen perform as both core developers and coordinators.
-
-*Setup:*
-Built on the CakePHP framework with heavy use of AJAX (jQuery) for visual gimmicks.
 
 *Requirements:*
 Preferably PHP5 and MySQL on an Apache server with mod_rewrite enabled (more on http://book.cakephp.org/view/28/Requirements).

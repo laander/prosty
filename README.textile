@@ -11,6 +11,6 @@ Preferably PHP5 and MySQL on an Apache server with mod_rewrite enabled (more on 
 
 *Installation:*
 1. Download/fork/fetch the full repository from GitHub
-2. Create a MySQL database from scheme: app/config/schema/prosty.sql
+2. Create a MySQL database from scheme: app/config/schema/db-schema.default.sql
 3. Change configuration settings in app/config/database.php and app/config/core.php (if needed)
 4. Login with the predifined admin user (secret for now ;))
